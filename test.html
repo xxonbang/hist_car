@@ -2,96 +2,112 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
 
-    <title>HIST 차량관리.</title>
+  <title>HIST 차량관리</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <!-- Custom styles for this template -->
-    <link href="./css/hist-car-management.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="./css/hist-car-management.css" rel="stylesheet" />
+  <script src="./js/loginAction.js"></script>
 
-    <!-- js for calendar -->
-    <!-- <script src="datepicker.dates.kr.js" charset="UTF-8"></script> -->
+  <!-- js for calendar -->
+  <!-- <script src="datepicker.dates.kr.js" charset="UTF-8"></script> -->
 
-    <link href="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.css" rel="stylesheet" />
 
-    <script src="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.js"></script>
-
+  <script src="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.js"></script>
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="main.html">HIST 차량관리</a>
-                <a class="navbar-nav navbar-right nav-link text-nowrap" href="loginPage.html">로그아웃</a>
-            </div>
-        </nav>
-    </header>
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="main.html">HIST 차량관리</a>
+        <a class="navbar-nav navbar-right nav-link text-nowrap" href="loginPage.html">로그아웃</a>
+      </div>
+    </nav>
+  </header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-                <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="history-input.html">사용내역 입력<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="history-search.html">사용내역 조회</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="car-management.html">차량관리</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+        <ul class="nav nav-pills flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="history-input.html">사용내역 입력<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="history-search.html">사용내역 조회</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="car-management.html">차량관리</a>
+          </li>
+        </ul>
+      </nav>
     </div>
+  </div>
 
 
-    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+    <center>
+      <table bgcolor="white" cellpadding="12" border="1">
+        <tr>
+          <td colspan="2">
+            <center>
+              <h1><i><b>Login Area</b></i></h1>
+            </center>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h1><i><b>UserID:</b></i></h1>
+          </td>
+          <td>
+            <form name="login"><input name="id" type="text">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h1><i><b>Password:</b></i></h1>
+          </td>
+          <td><input name="pass" type="password"></td>
+        </tr>
+        <tr>
+          <td>
+            <center><input type="button" value="Login" onClick="pasuser(this.form)"></center>
+          </td>
+          <td>
+            <center><br><input type="Reset"></form>
+          </td>
+        </tr>
+      </table>
+    </center>
 
-        <table
-        id="table"
-        data-toggle="table"
-        data-sort-class="table-active"
-        data-sortable="true"
-        data-height="460"
-        data-url="json/data1.json">
-        <thead>
-            <tr>
-            <th data-field="id" data-sortable="true">ID</th>
-            <th data-field="name" data-sortable="true">Item Name</th>
-            <th data-field="price" data-sortable="true">Item Price</th>
-            </tr>
-        </thead>
-        </table>
 
+  </tr>
+  </thead>
+  </table>
+  </main>
+</body>
 
-
-    </main>
-    </body>
 </html>
-
-
-

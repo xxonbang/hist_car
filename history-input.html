@@ -10,19 +10,19 @@
     <title>HIST 차량관리</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -55,7 +55,8 @@
             <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
                 <ul class="nav nav-pills flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="history-input.html">사용내역 입력<span class="sr-only">(current)</span></a>
+                        <a class="nav-link active" href="history-input.html">사용내역 입력<span
+                                class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="history-search.html">사용내역 조회</a>
@@ -85,8 +86,8 @@
                     </label>
                 </div> -->
 
-            
-                <!-- <label for="datepicker" class="col-form-label">사용 일자</label>
+
+            <!-- <label for="datepicker" class="col-form-label">사용 일자</label>
                 <div class="form-row">                            
                     <div class="input-daterange date" id="datepicker1" style="display: inline-table;">
                         <span class="form-group col-md-6">
@@ -114,108 +115,146 @@
                     <input type="text" class="datepicker form-control">
                     <span style="margin-top: 5px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
                     <input type="text" class="datepicker form-control">
-                </div>             
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="selectCarNum" class="col-form-label">차량선택</label>
-                    <select id="selectCarNum" class="form-control">
-                        <option selected>12하1234 (소렌토)</option>
-                        <option>56하7890 (아반떼)</option>
-                        <option>...</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputDpt" class="col-form-label">소속명</label>
-                    <input type="text" class="form-control" placeholder="소속명">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputName" class="col-form-label">성명</label>
-                    <input type="text" class="form-control" placeholder="성명">
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="selectUseType" class="col-form-label">사용형태</label>
-                    <select id="selectUseType" class="form-control">
-                        <option selected>업무용</option>
-                        <option>비업무용</option>
-                    </select>
+            <form action="/" id="inputForm">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="selectCarNum" class="col-form-label">차량선택</label>
+                        <select id="selectCarNum" class="form-control">
+                            <option selected>12하1234 (소렌토)</option>
+                            <option>56하7890 (아반떼)</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputDpt" class="col-form-label">소속명</label>
+                        <input type="text" class="form-control" placeholder="소속명">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputName" class="col-form-label">성명</label>
+                        <input type="text" class="form-control" placeholder="성명">
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="selectPurpose" class="col-form-label">사용유형</label>
-                    <select id="selectPurpose" class="form-control">
-                        <option selected>제조, 판매시설 등 해당 법인의 사업장 방문</option>
-                        <option>거래처, 대리점 방문</option>
-                        <option>회의 참석</option>
-                        <option>판촉 활동</option>
-                        <option>출, 퇴근</option>
-                        <option>교육, 훈련 등 기타 위에서 정하지 않은 업무 사용 목적</option>
-                        <option>비업무용</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="form-group width: 100%">
-                <label for="inputPurposeText">사용목적 기입</label>
-                <textarea class="form-control" id="inputPurposeText" rows="3"></textarea>
-            </div>
-            
-            <!-- <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="inputDestination" class="col-form-label">목적지</label>
-                    <input type="text" class="form-control" placeholder="목적지">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="selectUseType" class="col-form-label">사용형태</label>
+                        <select id="selectUseType" class="form-control">
+                            <option selected>업무용</option>
+                            <option>비업무용</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="selectPurpose" class="col-form-label">사용유형</label>
+                        <select id="selectPurpose" class="form-control">
+                            <option selected>제조, 판매시설 등 해당 법인의 사업장 방문</option>
+                            <option>거래처, 대리점 방문</option>
+                            <option>회의 참석</option>
+                            <option>판촉 활동</option>
+                            <option>출, 퇴근</option>
+                            <option>교육, 훈련 등 기타 위에서 정하지 않은 업무 사용 목적</option>
+                            <option>비업무용</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="inputStopover" class="col-form-label">경유지</label>
-                    <input type="text" class="form-control" placeholder="경유지">
+
+                <div class="form-group width: 100%">
+                    <label for="inputPurposeText">사용목적 기입</label>
+                    <textarea class="form-control" id="inputPurposeText" rows="3"></textarea>
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="inputKM" class="col-form-label">주행거리</label>
-                    <span><input type="text" class="form-control" placeholder="주행거리">KM</span>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="inputRefuel" class="col-form-label">주유량</label>
-                    <span><input type="text" class="form-control" placeholder="주유량">리터</span>
-                </div>
-            </div> -->
+
+                <!-- <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="inputDestination" class="col-form-label">목적지</label>
+                        <input type="text" class="form-control" placeholder="목적지">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputStopover" class="col-form-label">경유지</label>
+                        <input type="text" class="form-control" placeholder="경유지">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputKM" class="col-form-label">주행거리</label>
+                        <span><input type="text" class="form-control" placeholder="주행거리">KM</span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputRefuel" class="col-form-label">주유량</label>
+                        <span><input type="text" class="form-control" placeholder="주유량">리터</span>
+                    </div>
+                </div> -->
 
 
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="inputDestination" class="col-form-label">목적지</label>
-                    <input type="text" class="form-control" placeholder="목적지">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="inputDestination" class="col-form-label">목적지</label>
+                        <input id="destination" type="text" class="form-control" placeholder="목적지">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputStopover" class="col-form-label">경유지</label>
+                        <input type="text" class="form-control" placeholder="경유지">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputKM" class="col-form-label">주행거리</label>
+                        <span style="display: flex;"><input type="text" class="form-control" placeholder="주행거리"><span
+                                style="margin-top: 5px;">KM</span></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputRefuel" class="col-form-label">주유량</label>
+                        <span style="display: flex;"><input type="text" class="form-control" placeholder="주유량"><span
+                                style="margin-top: 5px;">L</span></span>
+                    </div>
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="inputStopover" class="col-form-label">경유지</label>
-                    <input type="text" class="form-control" placeholder="경유지">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="inputKM" class="col-form-label">주행거리</label>
-                    <span style="display: flex;"><input type="text" class="form-control" placeholder="주행거리"><span style="margin-top: 5px;">KM</span></span>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="inputRefuel" class="col-form-label">주유량</label>
-                    <span style="display: flex;"><input type="text" class="form-control" placeholder="주유량"><span style="margin-top: 5px;">L</span></span>
-                </div>
-            </div>
+            </form>
 
             <p>
-            <div class="row justify-content-center">
-                <!-- <button type="submit" class="btn btn-primary" style="margin: 10px;">입력 완료</button>
+                <div class="row justify-content-center">
+                    <!-- <button type="submit" class="btn btn-primary" style="margin: 10px;">입력 완료</button>
                 <button type="button" class="btn btn-primary" style="margin: 10px;">닫기</button> -->
-                <a class="btn btn-primary" href="#" role="button" style="margin: 5px;">입력 완료</a>
-                <a class="btn btn-primary" href="loginPage.html" role="button" style="margin: 5px;">닫기</a>
-            </div>
+                    <!-- <a class="btn btn-primary" href="#" role="button" style="margin: 5px;">입력 완료</a> -->
+                    <!-- <a class="btn btn-primary" href="loginPage.html" role="button" style="margin: 5px;">닫기</a> -->
+                    <button id="saveInputData" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">입력 완료</button>
+                    <button id="closePage" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">닫기</button>
+                </div>
             </p>
 
         </form>
     </main>
-</div>
+    </div>
 
     <script src="./js/datepicker.js"></script>
+    <script>
+
+        // $('#saveInputData').click(function () {
+        //     $.post("url", { '#destination.val()' })
+        // });
+        // $('#saveInputData').click(function () {
+        //     $.post("url", $( "#destination" ).val())
+        // });
+
+        $('#saveInputData').click(function () {
+            // Attach a submit handler to the form
+            $("#inputForm").submit(function (event) {
+
+                // Stop form from submitting normally
+                event.preventDefault();
+
+                // Get some values from elements on the page:
+                var $form = $(this),
+                    term = $form.find("inputForm").val(),
+                    url = $form.attr("action");
+
+                // Send the data using post
+                var posting = $.post(url, { term });
+        });
+
+
+        $('#closePage').click(function () {
+            alert('닫기');
+        });
+
+    </script>
 
 </body>
+
 </html>

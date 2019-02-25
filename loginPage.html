@@ -10,52 +10,126 @@
     <title>HIST 차량관리</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
     <!-- Custom styles for this template -->
 
     <link href="./css/loginPage.css" rel="stylesheet" />
+
 </head>
 
 <body class="wrapper">
-
-    <form class="form-signin">
-        <img class="mb-4" src="./images/hanjinCI.png" alt="" width="110" height="110">
+    <form id="loginForm" class="form-login" action="main.html">
+        <img class="mb-4" src="./images/hanjinCI.png" alt="" width="110" height="110" />
         <h1 class="h3 mb-3 font-weight-normal">HIST 차량관리</h1>
         <label for="inputID" class="sr-only">ID</label>
-        <input type="id" id="inputID" class="form-control" placeholder="ID" required autofocus>
+        <input type="text" id="userID" name="userID" class="form-control" placeholder="ID" required autofocus />
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" id="userPassword" name="userPassword" class="form-control" placeholder="PASSWORD"
+            required />
         <div class="checkbox mb-3">
             <label>
-                <input type="checkbox" value="remember-me"> Remember me
+                <input type="checkbox" value="remember-me" /> Remember me
             </label>
         </div>
 
-        <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button> -->
-        <a class="btn btn-lg btn-primary btn-block" href="main.html" role="button">Log in</a>
+        <input type="button" value="Login" class="btn btn-lg btn-primary btn-block" onClick="validateForm();" />
+        <input type="button" value="test" class="btn btn-lg btn-primary btn-block" onClick="test();" />
+
+        <!-- <button class="btn btn-lg btn-primary btn-block form-control" type="submit" >Log
+            in</button> -->
+
+        <!-- <a class="btn btn-lg btn-primary btn-block" href="javascript:login_check();" role="button">Log in</a> -->
 
         <div id="formFooter">
             <a class="underlineHover" href="#">Forgot Password?</a>
         </div>
 
         <!-- <p class="mt-5 mb-3 col-md-12 text-muted">&copy; Hanjin Information & Telecommunication System</p> -->
-
     </form>
 
-    <div style="margin-bottom: 10px;">&copy; Hanjin Information & Telecommunication System</div>
-
+    <div style="margin-bottom: 10px;">
+        &copy; Hanjin Information & Telecommunication System
+    </div>
 </body>
+<script>
+
+    window.onload = function () {
+
+
+    }
+
+    function validateForm() {
+        var un = document.getElementById("userID").value;
+        var pw = document.getElementById("userPassword").value;
+        var username = "test";
+        var password = "1234";
+        // console.log("un : " + un + ", pw : " + pw);
+        if ((un == username) && (pw == password)) {
+            // window.location = "main.html";
+            // return false;
+            var myForm = document.getElementById("loginForm");
+            myForm.submit();
+        } else if ((un != username) && (pw == password)) {
+            alert("ID가 틀립니다.")
+        } else if ((un == username) && (pw != password)) {
+            alert("비밀번호가 틀립니다.")
+        } else {
+            alert("로그인에 실패했습니다. ID와 PASSWORD를 확인해 주세요.")
+        }
+
+        // function UserAction() {
+        //     var xhttp = new XMLHttpRequest();
+        //     xhttp.onreadystatechange = function () {
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             alert(this.responseText);
+        //         }
+        //     };
+        //     xhttp.open("POST", "Your Rest URL Here", true);
+        //     xhttp.setRequestHeader("Content-type", "application/json");
+        //     xhttp.send("Your JSON Data Here");
+
+    }
+
+    function test() {
+        var reqeustBody = {
+            "username": $('#userID').val(),
+            "password": $('#userPassword').val()
+        };
+
+        //$.post('https://jwt-backend-test.herokuapp.com/rest/auth/login', reqeustBody, function (data) { console.dir(data); });
+
+
+        $.ajax({
+            url: 'https://jwt-backend-test.herokuapp.com/rest/auth/login',
+            type: 'post',
+            data: reqeustBody,
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers": "*"
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.dir(data);
+            }
+        });
+    }
+
+
+</script>
+
 </html>
