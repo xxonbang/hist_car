@@ -48,7 +48,7 @@
         </div>
 
         <input type="button" value="Login" class="btn btn-lg btn-primary btn-block" onClick="validateForm();" />
-        <input type="button" value="test" class="btn btn-lg btn-primary btn-block" onClick="test();" />
+        <input type="button" value="Login_Server" class="btn btn-lg btn-primary btn-block" onClick="login();" />
 
         <!-- <button class="btn btn-lg btn-primary btn-block form-control" type="submit" >Log
             in</button> -->
@@ -68,44 +68,44 @@
 </body>
 <script>
 
-    window.onload = function () {
+    // window.onload = function () {
 
 
-    }
+    // }
 
-    function validateForm() {
-        var un = document.getElementById("userID").value;
-        var pw = document.getElementById("userPassword").value;
-        var username = "test";
-        var password = "1234";
-        // console.log("un : " + un + ", pw : " + pw);
-        if ((un == username) && (pw == password)) {
-            // window.location = "main.html";
-            // return false;
-            var myForm = document.getElementById("loginForm");
-            myForm.submit();
-        } else if ((un != username) && (pw == password)) {
-            alert("ID가 틀립니다.")
-        } else if ((un == username) && (pw != password)) {
-            alert("비밀번호가 틀립니다.")
-        } else {
-            alert("로그인에 실패했습니다. ID와 PASSWORD를 확인해 주세요.")
-        }
+    // function validateForm() {
+    //     var un = document.getElementById("userID").value;
+    //     var pw = document.getElementById("userPassword").value;
+    //     var username = "test";
+    //     var password = "1234";
+    //     // console.log("un : " + un + ", pw : " + pw);
+    //     if ((un == username) && (pw == password)) {
+    //         // window.location = "main.html";
+    //         // return false;
+    //         var myForm = document.getElementById("loginForm");
+    //         myForm.submit();
+    //     } else if ((un != username) && (pw == password)) {
+    //         alert("ID가 틀립니다.")
+    //     } else if ((un == username) && (pw != password)) {
+    //         alert("비밀번호가 틀립니다.")
+    //     } else {
+    //         alert("로그인에 실패했습니다. ID와 PASSWORD를 확인해 주세요.")
+    //     }
 
-        // function UserAction() {
-        //     var xhttp = new XMLHttpRequest();
-        //     xhttp.onreadystatechange = function () {
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             alert(this.responseText);
-        //         }
-        //     };
-        //     xhttp.open("POST", "Your Rest URL Here", true);
-        //     xhttp.setRequestHeader("Content-type", "application/json");
-        //     xhttp.send("Your JSON Data Here");
+    // function UserAction() {
+    //     var xhttp = new XMLHttpRequest();
+    //     xhttp.onreadystatechange = function () {
+    //         if (this.readyState == 4 && this.status == 200) {
+    //             alert(this.responseText);
+    //         }
+    //     };
+    //     xhttp.open("POST", "Your Rest URL Here", true);
+    //     xhttp.setRequestHeader("Content-type", "application/json");
+    //     xhttp.send("Your JSON Data Here");
 
-    }
+    // }
 
-    function test() {
+    function login() {
         var reqeustBody = {
             "username": $('#userID').val(),
             "password": $('#userPassword').val()
@@ -113,21 +113,26 @@
 
         //$.post('https://jwt-backend-test.herokuapp.com/rest/auth/login', reqeustBody, function (data) { console.dir(data); });
 
-
+        var proxy = 'https://cors-anywhere.herokuapp.com/';
         $.ajax({
-            url: 'https://jwt-backend-test.herokuapp.com/rest/auth/login',
+            url: proxy + 'https://jwt-backend-test.herokuapp.com/rest/auth/login',
             type: 'post',
             data: reqeustBody,
             headers: {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers": "*"
+                'Content-Type': 'application/json'
             },
             dataType: 'json',
             success: function (data) {
                 console.dir(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus); alert("Error: " + errorThrown);
             }
         });
     }
+
+
+
 
 
 </script>
