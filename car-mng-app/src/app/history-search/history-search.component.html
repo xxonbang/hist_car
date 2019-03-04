@@ -236,66 +236,154 @@
 
 </main>
 
-<script>
-  var getDate = function () {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-      dd = '0' + dd;
-    }
+  <script src="./js/datepicker.js"></script>
+    <script>
 
-    if (mm < 10) {
-      mm = '0' + mm;
-    }
-    return mm + '/' + dd + '/' + yyyy;
-  }
+        var expectedData = [
+            { no: 1, date: '2019-02-01', group: 'APP서비스그룹', driver: '손병철' },
+            { no: 2, date: '2019-02-02', group: 'APP서비스그룹', driver: '허대영' },
+        ];
 
-  var getDatetime = function () {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-      dd = '0' + dd;
-    }
+        var expectedData2 = [
+            { no: 1, date: '2019-02-01', group: 'APP서비스그룹', driver: '손병철' },
+            { no: 2, date: '2019-02-02', group: 'APP서비스그룹', driver: '허대영' },
+            { no: 3, date: '2019-02-01', group: 'APP서비스그룹', driver: '최규범' },
+            { no: 4, date: '2019-02-02', group: 'APP서비스그룹', driver: '최경미s' },
+        ];
 
-    if (mm < 10) {
-      mm = '0' + mm;
-    }
-    return mm + '/' + dd + '/' + yyyy + today.getTime();
-  }
+        var getDate = function () {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
 
-  $(document).ready(function () {
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            return mm + '/' + dd + '/' + yyyy;
+        }
 
-    $('#fromDt').val(getDate());
-    $('#toDt').val(getDate());
+        var getDatetime = function () {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
 
-    var numbers = [
-      "12 하1234",
-      "12 하122kjhuikhiuhukhiu",
-    ]
-    $.each(numbers, function (val, text) {
-      $('#selectCarNum').append($('<option></option>').val(val).html(text))
-    }); // there was also a ) missing here
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            return mm + '/' + dd + '/' + yyyy + today.getTime();
+        }
 
-  });
+        $(document).ready(function () {
 
-  $('#searchBtn').click(function () {
-    alert('검색 버튼');
-  });
+            $('#fromDt').val(getDate());
+            $('#toDt').val(getDate());
 
-  $('#fix').click(function () {
-    alert('수정 버튼');
-  });
+            var numbers = [
+                "12 하1234",
+                "12 하122kjhuikhiuhukhiu",
+            ]
 
-  $('#deleteRqt').click(function () {
-    alert('삭제요청 버튼');
-  });
+            var numbers2 = [
+                "12 dsfasdfasd하1234",
+                "12 하122kasdfasdfasdfjhuikhiuhukhiu",
+            ]
 
-  $('#closePage').click(function () {
-    alert('닫기 버튼');
-  });
+            $.each(numbers, function (val, text) {
+                $('#selectCarNum').append($('<option></option>').val(val).html(text))
+            }); // there was also a ) missing here
 
+        });
+
+        $('#searchBtn').click(function () {
+            alert('검색 버튼');
+            var data = [
+                {
+                    id: 1,
+                    firstName: "Peter",
+                    lastName: "Jhons"
+                },
+                {
+                    id: 2,
+                    firstName: "David",
+                    lastName: "Bowie"
+                }
+            ];
+            drawRow(data);
+        });
+
+        $('#fix').click(function () {
+            alert('수정 버튼');
+        });
+
+        $('#deleteRqt').click(function () {
+            alert('삭제요청 버튼');
+        });
+
+        $('#closePage').click(function () {
+            alert('닫기 버튼');
+        });
+
+
+
+
+        $.ajax({
+            url: 'https://jwt-backend-test.herokuapp.com/rest/',
+            type: "post",
+            dataType: "json",
+            data: {
+                json: JSON.stringify([
+                    {
+                        id: 1,
+                        firstName: "Peter",
+                        lastName: "Jhons"
+                    },
+                    {
+                        id: 2,
+                        firstName: "David",
+                        lastName: "Bowie"
+                    }
+                ]),
+                delay: 3
+            },
+            success: function (data, textStatus, jqXHR) {
+                // since we are using jQuery, you don't need to parse response
+                drawTable(data);
+            }
+        });
+
+        function drawTable(data) {
+            for (var i = 0; i < data.length; i++) {
+                drawRow(data[i]);
+            }
+        }
+
+        function drawRow(rowData) {
+
+            for (var i = 0; rowData.length > i; i++) {
+                var row = $("<tr/>")
+                $("#test").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+
+                row.append($("<td>" + rowData[i].id + "</td>"));
+                row.append($("<td>" + rowData[i].firstName + "</td>"));
+                row.append($("<td>" + rowData[i].lastName + "</td>"));
+                row.append($("<td>" + rowData[i].xx + "</td > "));
+                row.append($("<td>" + rowData[i].xx + "</td > "));
+                row.append($("<td>" + rowData[i].xx + "</td > "));
+                row.append($("<td>" + rowData[i].xx + "</td > "));
+                row.append($("<td>" + rowData[i].xx + "</td > "));
+                row.append($("<td>" + rowData[i].xx + "</td > "));
+                row.append($("<td>" + rowData[i].xx + "</td > "));
+                row.append($("<td>" + rowData[i].xx + "</td > "));
+                row.append($("<td>" + rowData[i].xx + "</td > "));
+                row.append($("<td>" + rowData[i].xx + "</td > "));
+            }
+        }
 </script>

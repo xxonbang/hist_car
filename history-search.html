@@ -495,12 +495,11 @@
         }
 
         function drawRow(rowData) {
-
             for (var i = 0; rowData.length > i; i++) {
                 var row = $("<tr/>")
                 $("#test").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
 
-                row.append($("<td>" + rowData[i].id + "</td>"));
+                row.append($("<td>" + <rowData[i].id> + "</td>"));
                 row.append($("<td>" + rowData[i].firstName + "</td>"));
                 row.append($("<td>" + rowData[i].lastName + "</td>"));
                 row.append($("<td>" + rowData[i].xx + "</td > "));
@@ -515,9 +514,6 @@
                 row.append($("<td>" + rowData[i].xx + "</td > "));
             }
         }
-
-
-
 
     </script>
 

@@ -2,6 +2,16 @@
  * Base structure
  */
 
+.sample-a {
+  background-color: #cdef8c;
+  height: 100px;
+}
+
+.sample-n {
+  background-color: black;
+  height: 10px;
+}
+
 /* Move down content because we have a fixed navbar that is 3.5rem tall */
 body {
     padding-top: 3.5rem;

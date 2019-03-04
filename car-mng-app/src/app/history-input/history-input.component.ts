@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./history-input.component.css']
 })
 export class HistoryInputComponent implements OnInit {
+  status = 'active';
 
   constructor() { }
 
