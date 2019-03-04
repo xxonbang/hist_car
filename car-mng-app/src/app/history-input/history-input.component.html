@@ -1,0 +1,111 @@
+<main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+  <h1>Fill in</h1>
+  <form>
+    <label for="datepicker" class="col-form-label">사용 일자</label>
+    <div class="form-group col-md-12" style="padding-left: 0px; padding-right: 0px">
+      <div style="display: flex;">
+        <input type="text" class="datepicker form-control">
+        <span style="margin-top: 5px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+        <input type="text" class="datepicker form-control">
+      </div>
+    </div>
+    <form action="/" id="inputForm">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="selectCarNum" class="col-form-label">차량선택</label>
+          <select id="selectCarNum" class="form-control">
+            <option selected>12하1234 (소렌토)</option>
+            <option>56하7890 (아반떼)</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputDpt" class="col-form-label">소속명</label>
+          <input type="text" class="form-control" placeholder="소속명">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputName" class="col-form-label">성명</label>
+          <input type="text" class="form-control" placeholder="성명">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="selectUseType" class="col-form-label">사용형태</label>
+          <select id="selectUseType" class="form-control">
+            <option selected>업무용</option>
+            <option>비업무용</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="selectPurpose" class="col-form-label">사용유형</label>
+          <select id="selectPurpose" class="form-control">
+            <option selected>제조, 판매시설 등 해당 법인의 사업장 방문</option>
+            <option>거래처, 대리점 방문</option>
+            <option>회의 참석</option>
+            <option>판촉 활동</option>
+            <option>출, 퇴근</option>
+            <option>교육, 훈련 등 기타 위에서 정하지 않은 업무 사용 목적</option>
+            <option>비업무용</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group width: 100%">
+        <label for="inputPurposeText">사용목적 기입</label>
+        <textarea class="form-control" id="inputPurposeText" rows="3"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputDestination" class="col-form-label">목적지</label>
+          <input id="destination" type="text" class="form-control" placeholder="목적지">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputStopover" class="col-form-label">경유지</label>
+          <input type="text" class="form-control" placeholder="경유지">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputKM" class="col-form-label">주행거리</label>
+          <span style="display: flex;"><input type="text" class="form-control" placeholder="주행거리"><span style="margin-top: 5px;">KM</span></span>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputRefuel" class="col-form-label">주유량</label>
+          <span style="display: flex;"><input type="text" class="form-control" placeholder="주유량"><span style="margin-top: 5px;">L</span></span>
+        </div>
+      </div>
+    </form>
+
+    <div class="row justify-content-center">
+      <button id="saveInputData" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">입력 완료</button>
+      <button id="closePage" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">닫기</button>
+    </div>
+
+  </form>
+</main>
+
+<script>
+  $('#saveInputData').click(function () {
+    // Attach a submit handler to the form
+    $("#inputForm").submit(function (event) {
+
+      // Stop form from submitting normally
+      event.preventDefault();
+
+      // Get some values from elements on the page:
+      var $form = $(this),
+        term = $form.find("inputForm").val(),
+        url = $form.attr("action");
+
+      // Send the data using post
+      var posting = $.post(url, {
+        term
+      });
+    });
+
+    $('#closePage').click(function () {
+      alert('닫기');
+    });
+
+  });
+
+</script>
