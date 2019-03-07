@@ -7,6 +7,9 @@ import { MainComponent } from './main/main.component';
 import { HistoryInputComponent } from './history-input/history-input.component';
 import { HistorySearchComponent } from './history-search/history-search.component';
 import { CarManagementComponent } from './car-management/car-management.component';
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { CarManagementComponent } from './car-management/car-management.componen
     MainComponent,
     HistoryInputComponent,
     HistorySearchComponent,
-    CarManagementComponent
+    CarManagementComponent,
+    AuthComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

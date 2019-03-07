@@ -1,10 +1,10 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="main">HIST 차량관리</a>
+      <a class="navbar-brand" href="/main">HIST 차량관리</a>
       <ul class="navbar-nav navbar-right">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="loginPage.html">로그아웃</a>
+          <a class="nav-link" href="/loginPage">로그아웃</a>
         </li>
       </ul>
     </div>
@@ -15,31 +15,22 @@
     <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/history-input"
-          [ngClass]="{'sample-b':(_router.url ==='/history-input'), 'sample-a': (_router.url !=='/history-input')}">사용내역 입력</a>
+          <a class="nav-link" href="/history-input"
+          [ngClass]="{'selected':(_router.url ==='/history-input'), 'unselected': (_router.url !=='/history-input')}">사용내역 입력</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/history-search"
-          [ngClass]="{'sample-b':(_router.url ==='/history-search'), 'sample-a': (_router.url !=='/history-search')}">사용내역 조회</a>
+          <a class="nav-link" href="/history-search"
+          [ngClass]="{'selected':(_router.url ==='/history-search'), 'unselected': (_router.url !=='/history-search')}">사용내역 조회</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/car-management"
-          [ngClass]="{'sample-b':(_router.url ==='/car-management'), 'sample-a': (_router.url !=='/car-management')}">차량관리</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/car-management" role="button" aria-expanded="false"
+          [ngClass]="{'selected':(_router.url ==='/car-management'), 'unselected': (_router.url !=='/car-management')}">차량관리</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/car-management">차량 정보조회</a>
+              <a class="dropdown-item" href="/car-management">차량 등록/삭제</a>
+            </div>
         </li>
       </ul>
-      <!-- <ul class="subMenus nav nav-pills flex-column">
-        <li (click)="activateMenu(subMenu)"
-            *ngfor="let subMenu of subMenus"
-            [ngClass]="{'active': subMenu.active}">
-          <a>{{ subMenu.name }}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" routerLink="/history-search">사용내역 조회</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" routerLink="/car-management">차량관리</a>
-        </li>
-      </ul> -->
     </nav>
   </div>
 </div>

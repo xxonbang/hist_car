@@ -8,7 +8,6 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  public curUrl;
   public _router;
 
   constructor(private router: Router) {
@@ -16,7 +15,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this._router.url);
   }
 
 }
