@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 
 const routes: Routes = [
-  {path: '', component: MainComponent},
+  {path: '', redirectTo: '/main', pathMatch: 'full'},
   {path: 'main', component: MainComponent},
   {path: 'history-input', component: HistoryInputComponent},
   {path: 'history-search', component: HistorySearchComponent},
@@ -17,7 +17,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 

@@ -15,6 +15,11 @@
     <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
       <ul class="nav nav-pills flex-column">
         <li class="nav-item">
+
+          <!-- <a class="nav-link" [routerLink]="['main']" [routerLinkActive]="['active']">test</a> -->
+          <!-- <a class="nav-link" routerLink="/history-input" routerLinkActive="active">사용내역 입력</a>
+        </li> -->
+
           <a class="nav-link" href="/history-input"
           [ngClass]="{'selected':(_router.url ==='/history-input'), 'unselected': (_router.url !=='/history-input')}">사용내역 입력</a>
         </li>
