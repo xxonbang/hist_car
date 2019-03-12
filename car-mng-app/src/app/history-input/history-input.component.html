@@ -1,6 +1,25 @@
 <div role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
   <h1>Fill in</h1>
-  <form>
+
+
+    <!-- <label for="datepicker" class="col-form-label">사용 일자</label>
+    <div class="form-group col-md-12">
+    <div style="display: flex;">
+    <mat-form-field class="col-md-6" style="padding-left: 0px; padding-right: 0px">
+      <input matInput [matDatepicker]="picker1" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    <span style="margin-top: 5px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+    <mat-form-field class="col-md-6" style="padding-left: 0px; padding-right: 0px">
+      <input matInput [matDatepicker]="picker2" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    </div>
+    </div> -->
+
+<!-- 
     <label for="datepicker" class="col-form-label">사용 일자</label>
     <div class="form-group col-md-12" style="padding-left: 0px; padding-right: 0px">
       <div style="display: flex;">
@@ -8,8 +27,27 @@
         <span style="margin-top: 5px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
         <input type="text" class="datepicker form-control">
       </div>
-    </div>
+    </div> -->
+
     <form action="/" id="inputForm">
+
+      <div class="form-row">
+        <label for="datepicker" class="col-form-label">사용 일자</label>
+        <div class="form-group col-md-12" style="display: flex;">
+          <mat-form-field class="col-md-6" style="padding-left: 0px; padding-right: 0px">
+            <input matInput [matDatepicker]="picker1" placeholder="시작일" [value]="date.value">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          <span style="margin-top: 20px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+          <mat-form-field class="col-md-6" style="padding-left: 0px; padding-right: 25px">
+            <input matInput [matDatepicker]="picker2" placeholder="종료일" [value]="date.value">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="selectCarNum" class="col-form-label">차량선택</label>
@@ -80,7 +118,6 @@
       <button id="closePage" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">닫기</button>
     </div>
 
-  </form>
 </div>
 
 <!-- <script>

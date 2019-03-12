@@ -29,7 +29,7 @@ export class LogoutComponent implements OnInit {
         localStorage.clear();
       }
     );
-    this.loginService.logout(ok, err);
+    // this.loginService.logout(ok, err);
 
   }
 

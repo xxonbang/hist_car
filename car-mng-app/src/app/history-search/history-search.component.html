@@ -17,12 +17,28 @@
     <div class="form-group col-md-6">
       <label for="datepicker" class="col-form-label">사용 일자</label>
       <div style="display: flex;">
-        <input type="text" class="datepicker form-control" id="fromDt">
-        <span style="margin-top: 5px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
-        <input type="text" class="datepicker form-control" id="toDt">
+        <mat-form-field class="col-md-6" style="padding-left: 0px; padding-right: 0px">
+          <input matInput [matDatepicker]="picker1" placeholder="시작일" [value]="date.value">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <span style="margin-top: 20px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+        <mat-form-field class="col-md-6" style="padding-left: 0px; padding-right: 25px">
+          <input matInput [matDatepicker]="picker2" placeholder="종료일" [value]="date.value">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
       </div>
     </div>
   </div>
+
+
+
+      <!-- <div style="display: flex;">
+        <input type="text" class="datepicker form-control" id="fromDt">
+        <span style="margin-top: 5px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+        <input type="text" class="datepicker form-control" id="toDt">
+      </div> -->
 
   <h2 style="margin-top: 20px;">Record</h2>
   <div class="table-responsive">
