@@ -1,4 +1,4 @@
-import { AfterViewInit,Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service'
@@ -14,12 +14,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private loginService: LoginService
+    // private formBuilder: FormBuilder,
+    // private router: Router,
+    // private loginService: LoginService
   ) { }
 
-  // onSubmit() {
+  // onSubmit() { 
   //   if (this.loginForm.invalid) {
   //     return;
   //   }

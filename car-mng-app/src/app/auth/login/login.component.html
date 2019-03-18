@@ -1,24 +1,30 @@
 <div id="login">
   <!-- <form [loginForm]="loginForm" (ngSubmit)="onSubmit()"> -->
-  <form>
-    <img class="mb-4" src="/assets/images/hanjinCI.png" width="110" height="110" />
-    <h1 class="h3 mb-3 font-weight-normal">HIST 차량관리</h1>
-    <label for="inputID" class="sr-only">ID</label>
-    <input type="text" id="userID" name="userID" class="form-control" placeholder="ID" required autofocus />
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="userPassword" name="userPassword" class="form-control" placeholder="PASSWORD" required />
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me" /> Remember me
-      </label>
-    </div>
-    <input type="button" value="Login" class="btn btn-lg btn-primary btn-block" />
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+  <form class="form-login">
+    <div class="wrapper">
+      <img class="mb-4" src="/assets/images/hanjinCI.png" width="110" height="110" />
+      <h1 class="h3 mb-3 font-weight-normal">HIST 차량관리</h1>
+      <label for="inputID" class="sr-only">ID</label>
+      <input type="text" id="userID" name="userID" class="form-control" placeholder="ID" required autofocus />
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="userPassword" name="userPassword" class="form-control" placeholder="PASSWORD" required />
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me" /> Remember me
+        </label>
+      </div>
+      <input type="button" value="Login" class="btn btn-lg btn-primary btn-block" />
+      <div id="formFooter">
+        <a class="underlineHover" href="#">Forgot Password?</a>
+      </div>
+
+
+
     </div>
   </form>
 
-  <div style="margin-bottom: 10px;">
+  <div class="footer" style="margin-bottom: 10px;">
     &copy; Hanjin Information & Telecommunication System
   </div>
+
 </div>
