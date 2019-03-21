@@ -7,9 +7,8 @@ import { MainComponent } from './main/main.component';
 import { HistoryInputComponent } from './history-input/history-input.component';
 import { HistorySearchComponent } from './history-search/history-search.component';
 import { CarManagementComponent } from './car-management/car-management.component';
-import { AuthComponent } from './auth/auth.component';
-import { LoginComponent } from './auth/login/login.component';
-import { LogoutComponent } from './auth/logout/logout.component';
+import { LoginComponent } from './login/login.component';
+
 import { MaterialModule } from './material.module';
 
 @NgModule({
@@ -19,16 +18,17 @@ import { MaterialModule } from './material.module';
     HistoryInputComponent,
     HistorySearchComponent,
     CarManagementComponent,
-    AuthComponent,
     LoginComponent,
-    LogoutComponent
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
     MaterialModule
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

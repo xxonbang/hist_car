@@ -10,17 +10,17 @@ export class AppComponent implements OnInit {
 
   // isLogin: boolean;
 
-  constructor(private router: Router) {
 
+  constructor(public router: Router) {
   }
 
   ngOnInit() {
 
-  //   if (localStorage.getItem('AuthInfo')) {
-  //     this.isLogin = true;
-  //   } else {
-  //     this.router.navigate(['auth/login']);
-  //   }
+    //   if (localStorage.getItem('AuthInfo')) {
+    //     this.isLogin = true;
+    //   } else {
+    //     this.router.navigate(['auth/login']);
+    //   }
   }
 
 }
