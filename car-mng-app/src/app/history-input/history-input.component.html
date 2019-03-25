@@ -34,15 +34,18 @@
     <div class="form-row">
       <label for="datepicker" class="col-form-label">사용 일자</label>
       <div class="form-group col-md-12" style="display: flex;">
-        <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 0px"
-          [ngStyle]="{'font-size.px': 14}">
-          <input matInput [matDatepicker]="picker1" placeholder="시작일">
+        <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 0px;"
+          [ngStyle]="{'font-size.px': 15}">
+          <mat-label>시작일</mat-label>
+          <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
-        <span style="margin-top: 20px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
-        <mat-form-field class="col-md-6" style="padding-left: 0px; padding-right: 25px">
-          <input matInput [matDatepicker]="picker2" placeholder="종료일">
+        <span style="margin-top: 20px; font-weight: bold; color: gray;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+        <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 30px;"
+          [ngStyle]="{'font-size.px': 15}">
+          <mat-label>종료일</mat-label>
+          <input matInput [matDatepicker]="picker2" placeholder="YYYY-MM-DD">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
