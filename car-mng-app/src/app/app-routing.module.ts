@@ -4,7 +4,6 @@ import { MainComponent } from './main/main.component';
 import { HistoryInputComponent } from './history-input/history-input.component';
 import { HistorySearchComponent } from './history-search/history-search.component';
 import { CarManagementComponent } from './car-management/car-management.component';
-import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [

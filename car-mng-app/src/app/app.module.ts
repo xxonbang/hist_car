@@ -10,6 +10,8 @@ import { CarManagementComponent } from './car-management/car-management.componen
 import { LoginComponent } from './login/login.component';
 
 import { MaterialModule } from './material.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,14 @@ import { MaterialModule } from './material.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
+    MatTableModule,
+    MatPaginatorModule,
+
+  ],
+
+  exports: [
+
   ],
 
   providers: [],

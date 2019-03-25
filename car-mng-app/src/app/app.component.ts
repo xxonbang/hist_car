@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChangeDetectorRef } from '@angular/core';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,19 +9,11 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  // isLogin: boolean;
-
 
   constructor(public router: Router) {
   }
 
   ngOnInit() {
-
-    //   if (localStorage.getItem('AuthInfo')) {
-    //     this.isLogin = true;
-    //   } else {
-    //     this.router.navigate(['auth/login']);
-    //   }
   }
 
 }
