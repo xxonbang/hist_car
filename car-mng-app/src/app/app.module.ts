@@ -11,7 +11,9 @@ import { LoginComponent } from './login/login.component';
 
 import { MaterialModule } from './material.module';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material';
+import { MatPaginatorModule, MatCheckboxModule } from '@angular/material';
+
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { MatPaginatorModule } from '@angular/material';
     MaterialModule,
     MatTableModule,
     MatPaginatorModule,
-
+    FormsModule,
+    MatCheckboxModule
   ],
 
   exports: [

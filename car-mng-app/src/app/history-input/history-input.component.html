@@ -1,43 +1,16 @@
 <div role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
   <h1>Fill in</h1>
 
-
-  <!-- <label for="datepicker" class="col-form-label">사용 일자</label>
-    <div class="form-group col-md-12">
-    <div style="display: flex;">
-    <mat-form-field class="col-md-6" style="padding-left: 0px; padding-right: 0px">
-      <input matInput [matDatepicker]="picker1" placeholder="Choose a date">
-      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-      <mat-datepicker #picker1></mat-datepicker>
-    </mat-form-field>
-    <span style="margin-top: 5px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
-    <mat-form-field class="col-md-6" style="padding-left: 0px; padding-right: 0px">
-      <input matInput [matDatepicker]="picker2" placeholder="Choose a date">
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field>
-    </div>
-    </div> -->
-
-  <!-- 
-    <label for="datepicker" class="col-form-label">사용 일자</label>
-    <div class="form-group col-md-12" style="padding-left: 0px; padding-right: 0px">
-      <div style="display: flex;">
-        <input type="text" class="datepicker form-control">
-        <span style="margin-top: 5px; font-weight: bold;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
-        <input type="text" class="datepicker form-control">
-      </div>
-    </div> -->
-
   <form action="/" id="inputForm">
 
     <div class="form-row">
       <label for="datepicker" class="col-form-label">사용 일자</label>
-      <div class="form-group col-md-12" style="display: flex;">
+      <div class="form-group col-md-12" style="display: flex;" form>
         <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 0px;"
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>시작일</mat-label>
-          <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD">
+          <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD" [(ngModel)]="record.dateFrom"
+            name="dateFrom">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
@@ -45,7 +18,7 @@
         <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 30px;"
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>종료일</mat-label>
-          <input matInput [matDatepicker]="picker2" placeholder="YYYY-MM-DD">
+          <input matInput [matDatepicker]="picker2" placeholder="YYYY-MM-DD" [(ngModel)]="record.dateTo" name="dateTo">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
@@ -55,33 +28,33 @@
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="selectCarNum" class="col-form-label">차량선택</label>
-        <select id="selectCarNum" class="form-control">
-          <option selected>12하1234 (소렌토)</option>
-          <option>56하7890 (아반떼)</option>
-          <option>...</option>
+        <select id="selectCarNum" class="form-control" [(ngModel)]="record.selectedCar" name="selectedCar">
+          <option *ngFor="let car of carList" [value]="car.key">
+            {{car.value}}
+          </option>
         </select>
       </div>
       <div class="form-group col-md-4">
         <label for="inputDpt" class="col-form-label">소속명</label>
-        <input type="text" class="form-control" placeholder="소속명">
+        <input type="text" class="form-control" placeholder="소속명" [(ngModel)]="record.driverDep" name="driverDep">
       </div>
       <div class="form-group col-md-4">
         <label for="inputName" class="col-form-label">성명</label>
-        <input type="text" class="form-control" placeholder="성명">
+        <input type="text" class="form-control" placeholder="성명" [(ngModel)]="record.driverNm" name="driverNm">
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="selectUseType" class="col-form-label">사용형태</label>
-        <select id="selectUseType" class="form-control">
+        <select id="selectUseType" class="form-control" [(ngModel)]="record.bizOrNot" name="bizOrNot">
           <option selected>업무용</option>
           <option>비업무용</option>
         </select>
       </div>
       <div class="form-group col-md-6">
         <label for="selectPurpose" class="col-form-label">사용유형</label>
-        <select id="selectPurpose" class="form-control">
+        <select id="selectPurpose" class="form-control" [(ngModel)]="record.useType" name="useType">
           <option selected>제조, 판매시설 등 해당 법인의 사업장 방문</option>
           <option>거래처, 대리점 방문</option>
           <option>회의 참석</option>
@@ -95,58 +68,35 @@
 
     <div class="form-group width: 100%">
       <label for="inputPurposeText">사용목적 기입</label>
-      <textarea class="form-control" id="inputPurposeText" rows="3"></textarea>
+      <textarea class="form-control" id="inputPurposeText" rows="3" [(ngModel)]="record.usePurpose"
+        name="usePurpose"></textarea>
     </div>
     <div class="form-row">
       <div class="form-group col-md-3">
         <label for="inputDestination" class="col-form-label">목적지</label>
-        <input id="destination" type="text" class="form-control" placeholder="목적지">
+        <input id="destination" type="text" class="form-control" placeholder="목적지" [(ngModel)]="record.destination"
+          name="destination">
       </div>
       <div class="form-group col-md-3">
         <label for="inputStopover" class="col-form-label">경유지</label>
-        <input type="text" class="form-control" placeholder="경유지">
+        <input type="text" class="form-control" placeholder="경유지" [(ngModel)]="record.dropBy" name="dropBy">
       </div>
       <div class="form-group col-md-3">
         <label for="inputKM" class="col-form-label">주행거리</label>
-        <span style="display: flex;"><input type="text" class="form-control" placeholder="주행거리"><span
-            style="margin-top: 5px;">KM</span></span>
+        <span style="display: flex;"><input type="text" class="form-control" placeholder="주행거리"
+            [(ngModel)]="record.mileage" name="maileage"><span style="margin-top: 5px;">KM</span></span>
       </div>
       <div class="form-group col-md-3">
-        <label for="inputRefuel" class="col-form-label">주유량</label>
-        <span style="display: flex;"><input type="text" class="form-control" placeholder="주유량"><span
-            style="margin-top: 5px;">L</span></span>
+        <label for="inputRefuel" class="col-form-label">주유내역</label>
+        <span style="display: flex;"><input type="text" class="form-control" placeholder="주유량"
+            [(ngModel)]="record.fueling" name="fueling"><span style="margin-top: 5px;">L</span></span>
       </div>
     </div>
   </form>
 
-  <div class="row justify-content-center">
+  <div class="row justify-content-center" style="margin-top: 20px;">
     <button id="saveInputData" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">입력 완료</button>
     <button id="closePage" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">닫기</button>
   </div>
 
 </div>
-
-<!-- <script>
-  $('#saveInputData').click(function () {
-    // Attach a submit handler to the form
-    $("#inputForm").submit(function (event) {
-
-      // Stop form from submitting normally
-      event.preventDefault();
-
-      // Get some values from elements on the page:
-      var $form = $(this),
-        term = $form.find("inputForm").val(),
-        url = $form.attr("action");
-
-      // Send the data using post
-      var posting = $.post(url, {term});
-    });
-
-    $('#closePage').click(function () {
-      alert('닫기');
-    });
-
-  });
-
-</script> -->

@@ -1,20 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl } from '@angular/forms'; 
-
+import { RecordModel } from '../record-model';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-history-input',
   templateUrl: './history-input.component.html',
-  styleUrls: ['./history-input.component.css']
+  styleUrls: ['./history-input.component.css'],
+  providers: [DatePipe]
 })
 export class HistoryInputComponent implements OnInit {
-  // status = 'active';
 
-  date = new FormControl(new Date());
-  serializedDate = new FormControl((new Date()).toISOString());
+  record = new RecordModel();
 
-  constructor() { }
+  carList = [
+    { key: 1, value: '12하1234 (소렌토)' },
+    { key: 2, value: '56하7890 (아반떼)' },
+    { key: 3, value: '53서2493 (투싼)' }
+  ];
+
+
+  constructor(private datePipe: DatePipe) { }
 
   ngOnInit() {
+    this.record.dateFrom = new Date();
+    this.record.dateTo = new Date();
+  }
+
+  // setInputData() {
+  //   this.service.setParamData(this.record);
+  // }
+
+  transformDate(date) {
+    return this.datePipe.transform(date, 'yyyyMMdd');
   }
 
 }

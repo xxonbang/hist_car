@@ -1,6 +1,7 @@
 export class RecordModel {
 
-    useDate: string;
+    dateFrom: Date;
+    dateTo: Date;
     driverDep: string;
     driverNm: string;
     bizOrNot: string;
@@ -11,5 +12,7 @@ export class RecordModel {
     destination: string;
     dropBy: string;
     fueling: string;
+
+    selectedCar: string;
 
 }
