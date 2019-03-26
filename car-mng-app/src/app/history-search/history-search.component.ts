@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 
-import { RecordModel } from '../record-model';
+import { CommonModel } from '../common-model';
 
 import { DatePipe } from '@angular/common';
 
@@ -15,7 +15,7 @@ import { DatePipe } from '@angular/common';
 
 export class HistorySearchComponent implements OnInit {
 
-  record = new RecordModel();
+  record = new CommonModel();
 
   displayedColumns: string[] = ['select', 'dateFrom', 'dateTo', 'driverDep', 'driverNm', 'bizOrNot', 'useType', 'usePurpose', 'mileage', 'accumMileage', 'destination', 'dropBy', 'fueling'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);

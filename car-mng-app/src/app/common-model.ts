@@ -1,4 +1,4 @@
-export class RecordModel {
+export class CommonModel {
 
     dateFrom: Date;
     dateTo: Date;
@@ -12,7 +12,6 @@ export class RecordModel {
     destination: string;
     dropBy: string;
     fueling: string;
-
-    selectedCar: string;
+    histCar: string;
 
 }

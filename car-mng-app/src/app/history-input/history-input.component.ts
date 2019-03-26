@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RecordModel } from '../record-model';
+import { CommonModel } from '../common-model';
 import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-history-input',
@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 })
 export class HistoryInputComponent implements OnInit {
 
-  record = new RecordModel();
+  record = new CommonModel();
 
   carList = [
     { key: 1, value: '12하1234 (소렌토)' },
