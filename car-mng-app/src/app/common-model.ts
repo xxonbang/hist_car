@@ -11,7 +11,7 @@ export class CommonModel {
     accumMileage: number;
     destination: string;
     dropBy: string;
-    fueling: string;
+    fueling: number;
     histCar: string;
 
 }

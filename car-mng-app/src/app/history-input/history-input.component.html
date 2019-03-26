@@ -28,7 +28,7 @@
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="selectCarNum" class="col-form-label">차량선택</label>
-        <select id="selectCarNum" class="form-control" [(ngModel)]="record.selectedCar" name="selectedCar">
+        <select id="selectCarNum" class="form-control" [(ngModel)]="record.histCar" name="histCar">
           <option *ngFor="let car of carList" [value]="car.key">
             {{car.value}}
           </option>
