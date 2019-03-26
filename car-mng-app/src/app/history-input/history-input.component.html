@@ -1,7 +1,7 @@
 <div role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
   <h1>Fill in</h1>
 
-  <form action="/" id="inputForm">
+  <form #inputForm>
 
     <div class="form-row">
       <label for="datepicker" class="col-form-label">사용 일자</label>
@@ -48,20 +48,22 @@
       <div class="form-group col-md-6">
         <label for="selectUseType" class="col-form-label">사용형태</label>
         <select id="selectUseType" class="form-control" [(ngModel)]="record.bizOrNot" name="bizOrNot">
-          <option selected>업무용</option>
-          <option>비업무용</option>
+          <option [value]="item.key" *ngFor="let item of histCarList | keyvalue ">{{item.value}}</option>
         </select>
       </div>
       <div class="form-group col-md-6">
         <label for="selectPurpose" class="col-form-label">사용유형</label>
         <select id="selectPurpose" class="form-control" [(ngModel)]="record.useType" name="useType">
-          <option selected>제조, 판매시설 등 해당 법인의 사업장 방문</option>
+          <option [value]="item.key" *ngFor="let item of useTypeList | keyvalue ">{{item.value}}</option>
+
+          <!-- <option selected>제조, 판매시설 등 해당 법인의 사업장 방문</option>
           <option>거래처, 대리점 방문</option>
           <option>회의 참석</option>
           <option>판촉 활동</option>
           <option>출, 퇴근</option>
           <option>교육, 훈련 등 기타 위에서 정하지 않은 업무 사용 목적</option>
-          <option>비업무용</option>
+          <option>비업무용</option> -->
+
         </select>
       </div>
     </div>
@@ -95,8 +97,11 @@
   </form>
 
   <div class="row justify-content-center" style="margin-top: 20px;">
-    <button id="saveInputData" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">입력 완료</button>
-    <button id="closePage" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">닫기</button>
+    <button (click)="add(inputForm.value); inputFrom.value=''" id="addInputData" class="btn btn-md btn-primary"
+      type="submit" style="margin: 5px;">입력
+      완료</button>
+    <button (click)="close()" id="closePage" class="btn btn-md btn-primary" type="submit"
+      style="margin: 5px;">닫기</button>
   </div>
 
 </div>

@@ -15,16 +15,21 @@ import { DatePipe } from '@angular/common';
 
 export class HistorySearchComponent implements OnInit {
 
+  // 모든 input box 에 대한 입력 값들을 받게 될 record 변수를 CommonModel 타입으로 생성
   record = new CommonModel();
 
+  // table 의 header 부분 컬럼들 셋팅
   displayedColumns: string[] = ['select', 'dateFrom', 'dateTo', 'driverDep', 'driverNm', 'bizOrNot', 'useType', 'usePurpose', 'mileage', 'accumMileage', 'destination', 'dropBy', 'fueling'];
+  // table 의 data 들에 대한 source
   dataSource = new MatTableDataSource<CommonModel>(ELEMENT_DATA);
+  // 체크박스용
   selection = new SelectionModel<CommonModel>(true, []);
 
 
 
   constructor(private datePipe: DatePipe) { }
 
+  // pagination
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
@@ -61,6 +66,7 @@ export class HistorySearchComponent implements OnInit {
   }
 }
 
+// TODO : 서버로부터 data를 받아와서 arrary 방식으로 데이터 넣는 코딩 필요
 const ELEMENT_DATA: CommonModel[] = [
 
   { dateFrom: Date(), dateTo: Date(), driverDep: 'APP서비스그룹', driverNm: '손병철', bizOrNot: '업무용', useType: '회의 참석', usePurpose: '발주처 워크샵 참여', mileage: 5, accumMileage: 2000, destination: '속초', dropBy: '명동', fueling: 60, histCar: '' },
