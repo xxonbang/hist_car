@@ -14,7 +14,7 @@ import { MaterialModule } from './material.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, MatCheckboxModule } from '@angular/material';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,9 +32,10 @@ import { FormsModule } from '@angular/forms';
     MaterialModule,
     MatTableModule,
     MatPaginatorModule,
-    FormsModule,
     MatCheckboxModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
 
   exports: [

@@ -1,12 +1,16 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { CommonModel } from './common-model';
+import { InputFieldsModel } from './input-fields-model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'x-access-toke': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTixHVUVTVCIsImlhdCI6MTU1MzY1MTY5OSwiZXhwIjoxNTUzNzExNjk5fQ.1oyMcCUFTrlu6ivQZq00n08pn8z8e8RhmDSG56UWHMp_f6Wb71sBSRUCb2xm2UVRUGGwclmleJi6iDNSEycwDg',
+    // 'authentication': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTixHVUVTVCIsImlhdCI6MTU1MzY1MTY5OSwiZXhwIjoxNTUzNzExNjk5fQ.1oyMcCUFTrlu6ivQZq00n08pn8z8e8RhmDSG56UWHMp_f6Wb71sBSRUCb2xm2UVRUGGwclmleJi6iDNSEycwDg'
+  })
 };
 
 @Injectable({
@@ -16,6 +20,14 @@ export class RecordService {
 
   // 서버 주소 setting
   private carMngAppUrl = 'https://jwt-backend-test.herokuapp.com/';  // 웹 API 형식의 URL로 사용
+  // private carMngAppUrl = 'http://192.168.56.1:8080/car-use-hist/';  // 웹 API 형식의 URL로 사용
+
+  // 업무용/비업무용(사용형태) select list data 서버
+  private useTypeUrl = "http://localhost:6060/use-type/"
+  //  사용목적 select list data 서버
+  private usePursUrl = "http://localhost:6060/use-purs/"
+  //  차량 select list data 서버
+  private carListUrl = "http://localhost:6060/car-list/"
 
   // http 통신을 위한 angular 의 httpcient 를 http 변수에 담음
   constructor(
@@ -24,48 +36,66 @@ export class RecordService {
 
 
   // 모든 input box 에 대한 프로퍼티를 포함한 Common Model 을 record, allParams 변수에 담음
-  record = new CommonModel();
-  allParams = new CommonModel();
+  record = new InputFieldsModel();
+  allParams = new InputFieldsModel();
 
   // eventEmit 형태로 차량조회, 사용목적, 사용형태 List 를 생성
   histCarList$: EventEmitter<Map<string, string>> = new EventEmitter();
+  usePursList$: EventEmitter<Map<string, string>> = new EventEmitter();
   useTypeList$: EventEmitter<Map<string, string>> = new EventEmitter();
-  bizOrNot$: EventEmitter<Map<string, string>> = new EventEmitter();
+
+  // input box 들에 입력 된 입력 된 parameter 값들을 서버로 전달 및 저장요청
+  // saveInputData(allParams) { }
 
   // 저장 기능 수행 시, 호출되어 input box 들로부터 입력 된 parameter 값들을 allParams 변수에 담아 setRecord 로 보내며 호출
-  // setParamData(recordParam: CommonModel) {
-  //   this.allParams = recordParam;
-  //   this.setRecord(this.allParams);
-  // }
+  setParamData(recordParam: InputFieldsModel) {
+    this.allParams = recordParam;
+    this.addInputData(this.allParams);
+  }
 
   // server 로 부터 차량사용기록 data 를 받아와 table 을 그리는 쪽으로 전달, 혹은 직접 그리게..?
-  getRecord(): Observable<CommonModel[]> {
-    return this.http.get<CommonModel[]>(this.carMngAppUrl)
+  getRecord(): Observable<InputFieldsModel[]> {
+    return this.http.get<InputFieldsModel[]>(this.carMngAppUrl)
       .pipe(
         // tap(_ => this.log('fetched record')),
         catchError(this.handleError('getRecord', []))
       );
   }
 
-  // input box 들에 입력 된 입력 된 parameter 값들을 서버로 전달 및 저장요청
-  saveInputData(allParams) { }
-
-  /** PUT: 서버에 data를 저장 */
-  addInputData(record: CommonModel): Observable<CommonModel> {
-    return this.http.post<CommonModel>(this.carMngAppUrl, record, httpOptions)
+  /** POST: 서버에 data를 저장 */
+  addInputData(record: InputFieldsModel): Observable<InputFieldsModel> {
+    return this.http.post<InputFieldsModel>(this.carMngAppUrl, record, httpOptions)
       .pipe(
-        // tap((record: CommonModel) => this.log(`added record w/ driverNm=${record.driverNm}`)),
-        catchError(this.handleError<CommonModel>('addRecord'))
+        // tap((record: InputFieldsModel) => this.log(`added record w/ driverNm=${record.driverNm}`)),
+        catchError(this.handleError<InputFieldsModel>('addRecord'))
       );
   }
 
+  // 뒤로 가기 기능
   goBack() { }
 
-  getInputSelectionList(ok, err) {
-    return this.http.get(this.carMngAppUrl + '해당 inputbox 의 id, key, value 등', ok, err);
+  // server 로부터 차량목록을 받아 오는 기능 -> input form 에서 select 할 수 있도록 리턴 값 전달
+  getHistCarSelectionList() {
+    return this.http.get(this.carListUrl, httpOptions);
+  }
+
+  getUseTypeSelectionList() {
+    return this.http.get(this.useTypeUrl, httpOptions);
+  }
+
+  getUsePursSelectionList() {
+    return this.http.get(this.usePursUrl, httpOptions);
   }
 
 
+  // getHistCarSelectionList(record: CommonModel, ok, err) {
+  //   return this.http.get(this.carMngAppUrl + record.histCar, ok, err);
+
+
+  // server 로부터 사용유형을 받아 오는 기능 -> input form 에서 select 할 수 있도록 리턴 값 전달
+  // getUseTypeSelectionList(record: CommonModel, ok, err) {
+  //   return this.http.get(this.carMngAppUrl + record.useType, ok, err);
+  // }
 
 
 
@@ -109,4 +139,9 @@ export class RecordService {
       return of(result as T);
     };
   }
+
+
+
+  // 받아온 data 값을 JSON 으로 parsing 해서 원하는 타입 변수에 담는 방법 같음
+  // const roles: Role[] = JSON.parse(JSON.stringify(selectedData));
 }

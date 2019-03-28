@@ -1,12 +1,12 @@
-export class CommonModel {
+export class InputFieldsModel {
 
     dateFrom: Date;
     dateTo: Date;
     driverDep: string;
     driverNm: string;
-    bizOrNot: string;
     useType: string;
-    usePurpose: string;
+    usePurs: string;
+    useDetail: string;
     mileage: number;
     accumMileage: number;
     destination: string;
