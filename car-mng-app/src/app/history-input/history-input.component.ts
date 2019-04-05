@@ -3,6 +3,8 @@ import { InputFieldsModel } from '../input-fields-model';
 import { DatePipe } from '@angular/common';
 import { RecordService } from '../record.service'
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { SelectionListModel } from '../selection-list-model';
 @Component({
   selector: 'app-history-input',
   templateUrl: './history-input.component.html',
@@ -15,13 +17,14 @@ export class HistoryInputComponent implements OnInit {
   record = new InputFieldsModel();
   recordList: InputFieldsModel[];
   historyInputForm: FormGroup;
+  selectionList: SelectionListModel[];
 
   // 차량조희 input box 내 List 설정용 프로퍼티
-  histCarList;
+  histCarList: SelectionListModel[];
   // 사용형태 input box 내 List 설정용 프로퍼티
-  useTypeList;
+  useTypeList: SelectionListModel[];
   // 사용유형 input box 내 List 설정용 프로퍼티
-  usePursList;
+  usePursList: SelectionListModel[];
 
   // carList = [
   //   { key: 1, value: '12하1234 (소렌토)' },
@@ -81,23 +84,47 @@ export class HistoryInputComponent implements OnInit {
 
   // 차량선택 input box 내 List 조회용
   getHistCarList() {
-    const ok = (res => {
-      let temp = res;
-      const histCarList = new Map<string, string>();
-      histCarList.set('', '- 선택 -');
-      for (var i = 0; temp.length > i; i++) {
-        let curTemp = temp[i];
-        histCarList.set(curTemp.name, curTemp.name);
-      }
-      this.service.histCarList$.emit(histCarList);
-    });
-
-    const err = (error => {
-      alert(error);
-    });
-
-    this.service.getHistCarSelectionList();
+    this.service.getHistCarSelectionList()
+      .subscribe(
+        this.getSelectionListOk(),
+        this.getSelectionListError()
+      )
   }
+
+  getSelectionListOk() {
+    return (res: SelectionListModel[]) => this.selectionList = res;
+    // let temp = this.selectionList;
+    // const histCarList = new Map();
+    // histCarList.set('', '- 선택 -');
+    // for (var i = 0; temp.length > i; i++) {
+    //   let curTemp = temp[i];
+    //   histCarList.set(curTemp.code, curTemp.name);
+    // }
+    // this.service.histCarList$.emit(histCarList);
+  }
+
+  getSelectionListError() {
+    return error => console.log(error);
+  }
+
+  // getHistCarList() {
+  //   const ok = (res => {
+  //     let temp = res;
+  //     const histCarList = new Map<string, string>();
+  //     histCarList.set('', '- 선택 -');
+  //     for (var i = 0; temp.length > i; i++) {
+  //       let curTemp = temp[i];
+  //       histCarList.set(curTemp.name, curTemp.name);
+  //     }
+  //     this.service.histCarList$.emit(histCarList);
+  //   });
+
+  //   const err = (error => {
+  //     alert(error);
+  //   });
+
+  //   this.service.getHistCarSelectionList();
+  // }
 
   // 사용유형 input box 내 List 조회용
   getUsePursList() {

@@ -8,7 +8,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'x-access-token': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTixHVUVTVCIsImlhdCI6MTU1NDA5NzY0NiwiZXhwIjoxNTU0MTU3NjQ2fQ.ZX1aWH4ibLqmDT3AQZtD74utGdae8CghwlWAcBs72MZ4D8GftHEy2SBqhtrpEwIaPQrIIIXpoXimhI1PUra8QA',
+    'x-access-token': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTixHVUVTVCIsImlhdCI6MTU1NDQyNjY2NCwiZXhwIjoxNTU0NDg2NjY0fQ.axXe3W8b3613iT97pjQRipxcDmzQa57-5brQprALGywry0wS8YRATS2bh11p7PmxAPpvMPDkKQ47fKV0V779PA',
     // 'authentication': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTixHVUVTVCIsImlhdCI6MTU1MzY1MTY5OSwiZXhwIjoxNTUzNzExNjk5fQ.1oyMcCUFTrlu6ivQZq00n08pn8z8e8RhmDSG56UWHMp_f6Wb71sBSRUCb2xm2UVRUGGwclmleJi6iDNSEycwDg'
   })
 };
