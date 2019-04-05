@@ -8,8 +8,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'x-access-token': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTixHVUVTVCIsImlhdCI6MTU1NDQyNjY2NCwiZXhwIjoxNTU0NDg2NjY0fQ.axXe3W8b3613iT97pjQRipxcDmzQa57-5brQprALGywry0wS8YRATS2bh11p7PmxAPpvMPDkKQ47fKV0V779PA',
-    // 'authentication': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTixHVUVTVCIsImlhdCI6MTU1MzY1MTY5OSwiZXhwIjoxNTUzNzExNjk5fQ.1oyMcCUFTrlu6ivQZq00n08pn8z8e8RhmDSG56UWHMp_f6Wb71sBSRUCb2xm2UVRUGGwclmleJi6iDNSEycwDg'
+    'x-access-token': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTixHVUVTVCIsImlhdCI6MTU1NDQyNjY2NCwiZXhwIjoxNTU0NDg2NjY0fQ.axXe3W8b3613iT97pjQRipxcDmzQa57-5brQprALGywry0wS8YRATS2bh11p7PmxAPpvMPDkKQ47fKV0V779PA'
   })
 };
 
@@ -19,8 +18,8 @@ const httpOptions = {
 export class RecordService {
 
   // 서버 주소 setting
-  private carMngAppUrl = 'https://jwt-backend-test.herokuapp.com/';  // 웹 API 형식의 URL로 사용
-  // private carMngAppUrl = 'http://192.168.56.1:8080/car-use-hist/';  // 웹 API 형식의 URL로 사용
+  // Server Main URL
+  private carMngAppUrl = 'http://localhost:6060/';
 
   // 업무용/비업무용(사용형태) select list data 서버
   private useTypeUrl = "http://localhost:6060/use-type/"
@@ -35,7 +34,7 @@ export class RecordService {
   ) { }
 
 
-  // 모든 input box 에 대한 프로퍼티를 포함한 Common Model 을 record, allParams 변수에 담음
+  // 모든 input box 에 대한 프로퍼티를 포함한 InputFieldsModel 을 record, allParams 변수에 담음
   record = new InputFieldsModel();
   allParams = new InputFieldsModel();
 
@@ -86,36 +85,6 @@ export class RecordService {
   getUsePursSelectionList() {
     return this.http.get(this.usePursUrl, httpOptions);
   }
-
-
-  // getHistCarSelectionList(record: CommonModel, ok, err) {
-  //   return this.http.get(this.carMngAppUrl + record.histCar, ok, err);
-
-
-  // server 로부터 사용유형을 받아 오는 기능 -> input form 에서 select 할 수 있도록 리턴 값 전달
-  // getUseTypeSelectionList(record: CommonModel, ok, err) {
-  //   return this.http.get(this.carMngAppUrl + record.useType, ok, err);
-  // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

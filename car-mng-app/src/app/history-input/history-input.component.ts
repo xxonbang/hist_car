@@ -44,17 +44,10 @@ export class HistoryInputComponent implements OnInit {
     this.record.dateFrom = new Date();
     this.record.dateTo = new Date();
 
-    this.setSubscribe();
     this.getHistCarList();
     this.getUseTypeList();
     this.getUsePursList()
 
-    // this.historyInputForm = this.formBuilder.group({
-    //   dateFrom: new FormControl()
-    //   // authId: ['', Validators.required],
-    //   // authNm: ['', Validators.required],
-    //   // useYn: ['', Validators.required],
-    // });
 
     this.historyInputForm = new FormGroup({
       dateFrom: new FormControl(this.record.dateFrom, [Validators.required]),
@@ -91,87 +84,32 @@ export class HistoryInputComponent implements OnInit {
       )
   }
 
-  getSelectionListOk() {
-    return (res: SelectionListModel[]) => this.selectionList = res;
-    // let temp = this.selectionList;
-    // const histCarList = new Map();
-    // histCarList.set('', '- 선택 -');
-    // for (var i = 0; temp.length > i; i++) {
-    //   let curTemp = temp[i];
-    //   histCarList.set(curTemp.code, curTemp.name);
-    // }
-    // this.service.histCarList$.emit(histCarList);
-  }
-
-  getSelectionListError() {
-    return error => console.log(error);
-  }
-
-  // getHistCarList() {
-  //   const ok = (res => {
-  //     let temp = res;
-  //     const histCarList = new Map<string, string>();
-  //     histCarList.set('', '- 선택 -');
-  //     for (var i = 0; temp.length > i; i++) {
-  //       let curTemp = temp[i];
-  //       histCarList.set(curTemp.name, curTemp.name);
-  //     }
-  //     this.service.histCarList$.emit(histCarList);
-  //   });
-
-  //   const err = (error => {
-  //     alert(error);
-  //   });
-
-  //   this.service.getHistCarSelectionList();
-  // }
-
   // 사용유형 input box 내 List 조회용
   getUsePursList() {
-    const ok = (res => {
-      let temp = res;
-      const usePursList = new Map<string, string>();
-      usePursList.set('', '- 선택 -');
-      for (var i = 0; temp.length > i; i++) {
-        let curTemp = temp[i];
-        usePursList.set(curTemp.name, curTemp.name);
-      }
-      this.service.usePursList$.emit(usePursList);
-    });
-
-    const err = (error => {
-      alert(error);
-    });
-
-    this.service.getUsePursSelectionList();
+    this.service.getUsePursSelectionList()
+      .subscribe(
+        this.getSelectionListOk(),
+        this.getSelectionListError()
+      )
   }
 
   // 사용형태 input box 내 List 조회용
   getUseTypeList() {
-    const ok = (res => {
-      let temp = res;
-      const useTypeList = new Map<string, string>();
-      useTypeList.set('', '- 선택 -');
-      for (var i = 0; temp.length > i; i++) {
-        let curTemp = temp[i];
-        useTypeList.set(curTemp.name, curTemp.name);
-      }
-      this.service.useTypeList$.emit(useTypeList);
-    });
-
-    const err = (error => {
-      alert(error);
-    });
-
-    this.service.getUseTypeSelectionList();
-    // this.service.getUseTypeSelectionList(this.record, ok, err);
+    this.service.getUseTypeSelectionList()
+      .subscribe(
+        this.getSelectionListOk(),
+        this.getSelectionListError()
+      )
   }
 
-  // server 에서 받아 온 차량목록 List 와 사용목적 List 를 input box 로 전달해주는 subscribing
-  setSubscribe() {
-    this.service.histCarList$.subscribe((histCar) => { this.histCarList = histCar; });
-    this.service.useTypeList$.subscribe((useType) => { this.useTypeList = useType; });
-    this.service.usePursList$.subscribe((usePurs) => { this.usePursList = usePurs; });
+  // 서버로 부터 받아온 response SelectionListModel 배열에 담아 html 에서 사용할 수 있도록 함.
+  getSelectionListOk() {
+    return (res: SelectionListModel[]) => this.selectionList = res;
+  }
+
+  // 서버 통신 시, error 처리
+  getSelectionListError() {
+    return error => console.log(error);
   }
 
   // 입력 완료 button 클릭 시, 기능 수행
