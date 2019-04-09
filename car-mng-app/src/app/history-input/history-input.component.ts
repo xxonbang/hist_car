@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InputFieldsModel } from '../input-fields-model';
 import { DatePipe } from '@angular/common';
-import { RecordService } from '../record.service'
+import { RecordService } from '../record.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { SelectionListModel } from '../selection-list-model';
@@ -90,7 +90,7 @@ export class HistoryInputComponent implements OnInit {
       .subscribe(
         this.getHistCarListOk(),
         this.getHistCarListError()
-      )
+      );
   }
 
   // 사용유형 input box 내 List 조회용
@@ -99,7 +99,7 @@ export class HistoryInputComponent implements OnInit {
       .subscribe(
         this.getUsePursListOk(),
         this.getUsePursListError()
-      )
+      );
   }
 
   // 사용형태 input box 내 List 조회용
@@ -108,7 +108,7 @@ export class HistoryInputComponent implements OnInit {
       .subscribe(
         this.getUseTypeListOk(),
         this.getUseTypeListError()
-      )
+      );
   }
 
   // 서버로 부터 받아온 response SelectionListModel 배열에 담아 html 에서 사용할 수 있도록 함.

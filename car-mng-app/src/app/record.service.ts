@@ -12,16 +12,17 @@ export class RecordService {
 
   // 서버 주소 setting
   // Server Main URL
-  private carMngAppUrl = 'http://localhost:6060/';
+  // private carMngAppUrl = 'http://localhost:6060/';
+  private baseUrl = '/rest';
 
   // 업무용/비업무용(사용형태) select list data 서버
-  private useTypeUrl = "http://localhost:6060/use-type/"
+  private useTypeUrl = '/use-type/';
   //  사용목적 select list data 서버
-  private usePursUrl = "http://localhost:6060/use-purs/"
+  private usePursUrl = '/use-purs/';
   //  차량 select list data 서버
-  private carListUrl = "http://localhost:6060/car-list/"
+  private carListUrl = '/car-list/';
   //  차량 select list data 서버
-  private recordListUrl = "http://localhost:6060/car-use-hist/"
+  private recordListUrl = '/car-use-hist/';
 
   // http 통신을 위한 angular 의 httpcient 를 http 변수에 담음
   constructor(
@@ -49,7 +50,7 @@ export class RecordService {
 
   // server 로 부터 차량사용기록 data 를 받아와 table 을 그리는 쪽으로 전달, 혹은 직접 그리게..?
   getRecord(): Observable<InputFieldsModel[]> {
-    return this.http.get<InputFieldsModel[]>(this.recordListUrl, { headers: this.getHttpHeaders() })
+    return this.http.get<InputFieldsModel[]>(this.baseUrl, { headers: this.getHttpHeaders() })
       .pipe(
         // tap(_ => this.log('fetched record')),
         catchError(this.handleError('getRecord', []))
@@ -58,7 +59,7 @@ export class RecordService {
 
   /** POST: 서버에 data를 저장 */
   addInputData(record: InputFieldsModel): Observable<InputFieldsModel> {
-    return this.http.post<InputFieldsModel>(this.carMngAppUrl, record, { headers: this.getHttpHeaders() })
+    return this.http.post<InputFieldsModel>(this.baseUrl, record, { headers: this.getHttpHeaders() })
       .pipe(
         // tap((record: InputFieldsModel) => this.log(`added record w/ driverNm=${record.driverNm}`)),
         catchError(this.handleError<InputFieldsModel>('addRecord'))
@@ -80,7 +81,7 @@ export class RecordService {
       console.dir('error');
     });
 
-    this.http.post<InputFieldsModel>('http://localhost:6060/rest/auth/login', body).pipe().subscribe(ok, err);
+    this.http.post<InputFieldsModel>(this.baseUrl + '/auth/login', body).pipe().subscribe(ok, err);
   }
 
   carUsageList() {
@@ -93,7 +94,7 @@ export class RecordService {
       console.dir('error');
     });
 
-    this.http.get<InputFieldsModel>('/car-list', { headers: this.getHttpHeaders() }).pipe().subscribe(ok, err);
+    this.http.get<InputFieldsModel>(this.baseUrl + '/car-list', { headers: this.getHttpHeaders() }).pipe().subscribe(ok, err);
   }
 
   // 뒤로 가기 기능
@@ -101,24 +102,21 @@ export class RecordService {
 
   // server 로부터 차량목록을 받아 오는 기능 -> input form 에서 select 할 수 있도록 리턴 값 전달
   getHistCarSelectionList() {
-    return this.http.get(this.carListUrl, { headers: this.getHttpHeaders() });
+    return this.http.get(this.baseUrl + this.carListUrl, { headers: this.getHttpHeaders() });
   }
 
   getUseTypeSelectionList() {
-    return this.http.get(this.useTypeUrl, { headers: this.getHttpHeaders() });
+    return this.http.get(this.baseUrl + this.useTypeUrl, { headers: this.getHttpHeaders() });
   }
 
   getUsePursSelectionList() {
-    return this.http.get(this.usePursUrl, { headers: this.getHttpHeaders() });
+    return this.http.get(this.baseUrl + this.usePursUrl, { headers: this.getHttpHeaders() });
   }
 
   getHttpHeaders() {
     return new HttpHeaders({ 'Content-Type': 'application/json' }).set('x-access-token', localStorage.getItem('accessToken'));
   }
 
-
-
-  
 
 
   /**

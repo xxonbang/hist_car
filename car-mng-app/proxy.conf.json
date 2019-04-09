@@ -1,6 +1,8 @@
 {
-  "/**": {
-    "target": "http://localhost:6060",
-    "secure": false
+  "/rest/**": {
+    "target": "http://localhost:6060/rest",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {"^/rest" : ""}
   }
 }
