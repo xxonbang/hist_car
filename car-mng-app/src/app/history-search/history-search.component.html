@@ -8,15 +8,15 @@
     </div>
   </div>
 
-  <div class="form-row">
-    <div class="form-group col-md-12">
+  <div #inputForm [formGroup]="historyInputForm">
+
+    <div class="form-row">
       <label for="datepicker" class="col-form-label">사용 일자</label>
-      <div style="display: flex;">
+      <div class="form-group col-md-12" style="display: flex;">
         <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 0px;"
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>시작일</mat-label>
-          <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD" [(ngModel)]="record.dateFrom"
-            name="dateFrom">
+          <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD" formControlName="dateFrom">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
@@ -24,109 +24,112 @@
         <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 30px;"
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>종료일</mat-label>
-          <input matInput [matDatepicker]="picker2" placeholder="YYYY-MM-DD" [(ngModel)]="record.dateTo" name="dateTo">
+          <input matInput [matDatepicker]="picker2" placeholder="YYYY-MM-DD" name="dateTo" formControlName="dateTo">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
       </div>
     </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <label for="selectCarNum" class="col-form-label">차량선택</label>
-      <select id="selectCarNum" class="form-control" [(ngModel)]="record.histCar" name="histCar">
-      </select>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="selectCar" class="col-form-label">차량선택</label>
+        <select id="selectCar" class="form-control" formControlName="histCar">
+          <option [value]="item.code" *ngFor="let item of histCarList">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="mat-elevation-z8" style="margin-top: 20px;">
+      <table mat-table [dataSource]="dataSource" style="width: 100%;">
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateFrom">
+          <th mat-header-cell *matHeaderCellDef> 사용일자(시작일) </th>
+          <td mat-cell *matCellDef="let element"> {{element.dateFrom}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateTo">
+          <th mat-header-cell *matHeaderCellDef> 사용일자(종료일) </th>
+          <td mat-cell *matCellDef="let element"> {{element.dateTo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="driverDep">
+          <th mat-header-cell *matHeaderCellDef> 소속 </th>
+          <td mat-cell *matCellDef="let element"> {{element.driverDep}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="driverNm">
+          <th mat-header-cell *matHeaderCellDef> 운전자 </th>
+          <td mat-cell *matCellDef="let element"> {{element.driverNm}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="useType">
+          <th mat-header-cell *matHeaderCellDef> 사용형태 </th>
+          <td mat-cell *matCellDef="let element"> {{element.useType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="usePurs">
+          <th mat-header-cell *matHeaderCellDef> 사용유형 </th>
+          <td mat-cell *matCellDef="let element"> {{element.usePurs}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="useDetail">
+          <th mat-header-cell *matHeaderCellDef> 사용목적 </th>
+          <td mat-cell *matCellDef="let element"> {{element.useDetail}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mileage">
+          <th mat-header-cell *matHeaderCellDef> 주행거리(KM) </th>
+          <td mat-cell *matCellDef="let element"> {{element.mileage}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="accumMileage">
+          <th mat-header-cell *matHeaderCellDef> 누적주행거리(KM) </th>
+          <td mat-cell *matCellDef="let element"> {{element.accumMileage}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="destination">
+          <th mat-header-cell *matHeaderCellDef> 목적지 </th>
+          <td mat-cell *matCellDef="let element"> {{element.destination}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dropBy">
+          <th mat-header-cell *matHeaderCellDef> 경유지 </th>
+          <td mat-cell *matCellDef="let element"> {{element.dropBy}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fueling">
+          <th mat-header-cell *matHeaderCellDef> 주유내역(L) </th>
+          <td mat-cell *matCellDef="let element"> {{element.fueling}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[20, 40]" showFirstLastButtons></mat-paginator>
+    </div>
+
+    <div class="row justify-content-center" style="margin-top: 30px;">
+      <button id="fix" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">수정</button>
+      <button id="deleteRqt" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">삭제요청</button>
+      <button id="closePage" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">닫기</button>
     </div>
   </div>
 
-
-  <div class="mat-elevation-z8" style="margin-top: 20px;">
-    <table mat-table [dataSource]="dataSource" style="width: 100%;">
-
-      <!-- Checkbox Column -->
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="dateFrom">
-        <th mat-header-cell *matHeaderCellDef> 사용일자(시작일) </th>
-        <td mat-cell *matCellDef="let element"> {{element.dateFrom}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="dateTo">
-        <th mat-header-cell *matHeaderCellDef> 사용일자(종료일) </th>
-        <td mat-cell *matCellDef="let element"> {{element.dateTo}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="driverDep">
-        <th mat-header-cell *matHeaderCellDef> 소속 </th>
-        <td mat-cell *matCellDef="let element"> {{element.driverDep}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="driverNm">
-        <th mat-header-cell *matHeaderCellDef> 운전자 </th>
-        <td mat-cell *matCellDef="let element"> {{element.driverNm}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="useType">
-        <th mat-header-cell *matHeaderCellDef> 사용형태 </th>
-        <td mat-cell *matCellDef="let element"> {{element.useType}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="usePurs">
-        <th mat-header-cell *matHeaderCellDef> 사용유형 </th>
-        <td mat-cell *matCellDef="let element"> {{element.usePurs}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="useDetail">
-        <th mat-header-cell *matHeaderCellDef> 사용목적 </th>
-        <td mat-cell *matCellDef="let element"> {{element.useDetail}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="mileage">
-        <th mat-header-cell *matHeaderCellDef> 주행거리(KM) </th>
-        <td mat-cell *matCellDef="let element"> {{element.mileage}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="accumMileage">
-        <th mat-header-cell *matHeaderCellDef> 누적주행거리(KM) </th>
-        <td mat-cell *matCellDef="let element"> {{element.accumMileage}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="destination">
-        <th mat-header-cell *matHeaderCellDef> 목적지 </th>
-        <td mat-cell *matCellDef="let element"> {{element.destination}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="dropBy">
-        <th mat-header-cell *matHeaderCellDef> 경유지 </th>
-        <td mat-cell *matCellDef="let element"> {{element.dropBy}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="fueling">
-        <th mat-header-cell *matHeaderCellDef> 주유내역(L) </th>
-        <td mat-cell *matCellDef="let element"> {{element.fueling}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[20, 40]" showFirstLastButtons></mat-paginator>
-  </div>
-
-  <div class="row justify-content-center" style="margin-top: 30px;">
-    <button id="fix" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">수정</button>
-    <button id="deleteRqt" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">삭제요청</button>
-    <button id="closePage" class="btn btn-md btn-primary" type="submit" style="margin: 5px;">닫기</button>
-  </div>
 </div>

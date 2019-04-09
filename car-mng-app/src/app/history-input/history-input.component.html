@@ -5,7 +5,7 @@
 
     <div class="form-row">
       <label for="datepicker" class="col-form-label">사용 일자</label>
-      <div class="form-group col-md-12" style="display: flex;" form>
+      <div class="form-group col-md-12" style="display: flex;">
         <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 0px;"
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>시작일</mat-label>
@@ -26,11 +26,9 @@
 
     <div class="form-row">
       <div class="form-group col-md-4">
-        <label for="selectCarNum" class="col-form-label">차량선택</label>
-        <select id="selectCarNum" class="form-control" formControlName="histCar">
-          <option *ngFor="let car of histCarList" [value]="car.key">
-            {{car.value}}
-          </option>
+        <label for="selectCar" class="col-form-label">차량선택</label>
+        <select id="selectCar" class="form-control" formControlName="histCar">
+          <option [value]="item.code" *ngFor="let item of histCarList">{{item.name}}</option>
         </select>
       </div>
       <div class="form-group col-md-4">
@@ -48,13 +46,13 @@
       <div class="form-group col-md-6">
         <label for="selectUseType" class="col-form-label">사용형태</label>
         <select id="selectUseType" class="form-control" formControlName="useType">
-          <option [value]="item.code" *ngFor="let item of selectionList">{{item.name}}</option>
+          <option [value]="item.code" *ngFor="let item of useTypeList">{{item.name}}</option>
         </select>
       </div>
       <div class="form-group col-md-6">
         <label for="selectPurpose" class="col-form-label">사용유형</label>
         <select id="selectPurpose" class="form-control" formControlName="usePurs">
-          <option [value]="item.key" *ngFor="let item of useTypeList | keyvalue ">{{item.value}}</option>
+          <option [value]="item.code" *ngFor="let item of usePursList">{{item.name}}</option>
         </select>
       </div>
     </div>
@@ -170,4 +168,8 @@
       style="margin: 5px;">입력완료</button>
     <button (click)="close()" id="closePage" class="btn btn-md btn-primary" type="submit"
       style="margin: 5px;">닫기</button>
+    <button (click)="login()" id="closePage" class="btn btn-md btn-primary" type="button"
+      style="margin: 5px;">login</button>
+    <button (click)="carUsageList()" id="closePage" class="btn btn-md btn-primary" type="button"
+      style="margin: 5px;">car usage list</button>
   </div>

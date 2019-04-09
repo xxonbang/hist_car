@@ -17,7 +17,6 @@ export class HistoryInputComponent implements OnInit {
   record = new InputFieldsModel();
   recordList: InputFieldsModel[];
   historyInputForm: FormGroup;
-  selectionList: SelectionListModel[];
 
   // 차량조희 input box 내 List 설정용 프로퍼티
   histCarList: SelectionListModel[];
@@ -41,13 +40,13 @@ export class HistoryInputComponent implements OnInit {
 
 
   ngOnInit() {
-    this.record.dateFrom = new Date();
-    this.record.dateTo = new Date();
+    // this.record.dateFrom = new Date();
+    // this.record.dateTo = new Date();
+
 
     this.getHistCarList();
     this.getUseTypeList();
-    this.getUsePursList()
-
+    this.getUsePursList();
 
     this.historyInputForm = new FormGroup({
       dateFrom: new FormControl(this.record.dateFrom, [Validators.required]),
@@ -62,13 +61,23 @@ export class HistoryInputComponent implements OnInit {
       destination: new FormControl(),
       dropBy: new FormControl(),
       fueling: new FormControl(),
-      histCar: new FormControl()
+      histCar: new FormControl(),
     });
 
     const today = new Date();
     this.historyInputForm.controls['dateFrom'].setValue(today);
     this.historyInputForm.controls['dateTo'].setValue(today);
+
+    // this.historyInputForm.setValue({ useType: '- 선택 -' });
+    // this.historyInputForm.controls['useType'].setValue({ "name": "- 선택 -" });
+    // this.historyInputForm.controls['usePurs'].setValue({ "name": "- 선택 -" });
+
   }
+
+  // drop-box 형 input box 내 기본 값을 '- 선택 -' 으로 주기 위해 메소드로 만들어 ngOninit에 넣어보려 했었음.
+  // setDefaultSelectionList() {
+  //   this.historyInputForm.controls['histCar'].setValue('- 선택 -');
+  // }
 
   // sever 와의 통신을 위한 date form 변경
   transformDate(date) {
@@ -79,8 +88,8 @@ export class HistoryInputComponent implements OnInit {
   getHistCarList() {
     this.service.getHistCarSelectionList()
       .subscribe(
-        this.getSelectionListOk(),
-        this.getSelectionListError()
+        this.getHistCarListOk(),
+        this.getHistCarListError()
       )
   }
 
@@ -88,8 +97,8 @@ export class HistoryInputComponent implements OnInit {
   getUsePursList() {
     this.service.getUsePursSelectionList()
       .subscribe(
-        this.getSelectionListOk(),
-        this.getSelectionListError()
+        this.getUsePursListOk(),
+        this.getUsePursListError()
       )
   }
 
@@ -97,18 +106,34 @@ export class HistoryInputComponent implements OnInit {
   getUseTypeList() {
     this.service.getUseTypeSelectionList()
       .subscribe(
-        this.getSelectionListOk(),
-        this.getSelectionListError()
+        this.getUseTypeListOk(),
+        this.getUseTypeListError()
       )
   }
 
   // 서버로 부터 받아온 response SelectionListModel 배열에 담아 html 에서 사용할 수 있도록 함.
-  getSelectionListOk() {
-    return (res: SelectionListModel[]) => this.selectionList = res;
+  getHistCarListOk() {
+    return (res: SelectionListModel[]) => this.histCarList = res;
+  }
+
+  getUsePursListOk() {
+    return (res: SelectionListModel[]) => this.usePursList = res;
+  }
+
+  getUseTypeListOk() {
+    return (res: SelectionListModel[]) => this.useTypeList = res;
   }
 
   // 서버 통신 시, error 처리
-  getSelectionListError() {
+  getHistCarListError() {
+    return error => console.log(error);
+  }
+
+  getUsePursListError() {
+    return error => console.log(error);
+  }
+
+  getUseTypeListError() {
     return error => console.log(error);
   }
 
@@ -128,6 +153,14 @@ export class HistoryInputComponent implements OnInit {
   // 닫기 기능
   close(): void {
 
+  }
+
+  login() {
+    this.service.login();
+  }
+
+  carUsageList() {
+    this.service.carUsageList();
   }
 
 }

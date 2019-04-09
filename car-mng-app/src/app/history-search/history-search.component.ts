@@ -8,6 +8,8 @@ import { RecordService } from '../record.service'
 
 import { DatePipe } from '@angular/common';
 
+import { SelectionListModel } from '../selection-list-model';
+
 @Component({
   selector: 'app-history-search',
   templateUrl: './history-search.component.html',
@@ -19,6 +21,9 @@ export class HistorySearchComponent implements OnInit {
 
   // Angular Reactive Form Group 사용을 위한 선언
   historyInputForm: FormGroup;
+
+  // 차량조희 input box 내 List 설정용 프로퍼티
+  histCarList: SelectionListModel[];
 
   // 모든 input box 에 대한 입력 값들을 받게 될 record 변수를 InputFieldsModel 타입으로 생성
   record = new InputFieldsModel();
@@ -40,9 +45,12 @@ export class HistorySearchComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
+
+    this.getHistCarList();
+
     this.dataSource.paginator = this.paginator;
-    this.record.dateFrom = new Date();
-    this.record.dateTo = new Date();
+    // this.record.dateFrom = new Date();
+    // this.record.dateTo = new Date();
 
     this.historyInputForm = new FormGroup({
       dateFrom: new FormControl(this.record.dateFrom, [Validators.required]),
@@ -55,7 +63,24 @@ export class HistorySearchComponent implements OnInit {
     this.historyInputForm.controls['dateTo'].setValue(today);
   }
 
+  // 차량선택 input box 내 List 조회용
+  getHistCarList() {
+    this.service.getHistCarSelectionList()
+      .subscribe(
+        this.getHistCarListOk(),
+        this.getHistCarListError()
+      )
+  }
 
+  // 서버로 부터 받아온 response SelectionListModel 배열에 담아 html 에서 사용할 수 있도록 함.
+  getHistCarListOk() {
+    return (res: SelectionListModel[]) => this.histCarList = res;
+  }
+
+  // 서버 통신 시, error 처리
+  getHistCarListError() {
+    return error => console.log(error);
+  }
 
   // server 와의 통신을 위해 date format 변경
   transformDate(date) {
