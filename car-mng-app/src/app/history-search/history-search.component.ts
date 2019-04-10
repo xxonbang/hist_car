@@ -31,10 +31,17 @@ export class HistorySearchComponent implements OnInit {
   record = new InputFieldsModel();
   recordList: InputFieldsModel[];
 
+  // TODO : 서버로부터 data를 받아와서 arrary 방식으로 데이터 넣는 코딩 필요
+  TABLE_DATA: InputFieldsModel[] = [
+
+    // { dateFrom: new Date(), dateTo: new Date(), driverDept: 'APP서비스그룹', driverNm: '손병철', useType: '업무용', usePurs: '회의 참석', usePursDetail: '발주처 워크샵 참여', driveDist: 5, accumMileage: 2000, dest: '속초', dropby: '명동', fueling: 60, histCar: '' },
+
+  ];
+
   // table 의 header 부분 컬럼들 셋팅
-  displayedColumns: string[] = ['select', 'dateFrom', 'dateTo', 'driverDept', 'driverNm', 'useType', 'usePurs', 'usePursDetail', 'driveDist', 'accumMileage', 'dest', 'dropby', 'fueling'];
+  displayedColumns: string[] = ['select', 'seq', 'dateFrom', 'dateTo', 'driverDept', 'driverNm', 'useType', 'usePurs', 'usePursDetail', 'driveDist', 'accumMileage', 'dest', 'dropby', 'fueling', 'carid'];
   // table 의 data 들에 대한 source
-  dataSource = new MatTableDataSource(this.recordList);
+  dataSource = new MatTableDataSource(this.TABLE_DATA);
   // 체크박스용
   selection = new SelectionModel<InputFieldsModel>(true, []);
 
@@ -56,7 +63,7 @@ export class HistorySearchComponent implements OnInit {
     // this.record.dateTo = new Date();
 
     this.historyInputForm = new FormGroup({
-      dateFrom: new FormControl(this.record.dateFrom, [Validators.required]),
+      dateFrom: new FormControl(this.record.datefrom, [Validators.required]),
       dateTo: new FormControl(),
       histCar: new FormControl()
     });
@@ -64,10 +71,25 @@ export class HistorySearchComponent implements OnInit {
     const today = new Date();
     this.historyInputForm.controls['dateFrom'].setValue(today);
     this.historyInputForm.controls['dateTo'].setValue(today);
+
+    console.dir('### ngOnInit is working!!');
+    this.setSubscribe();
+  }
+
+  setSubscribe() {
+
+    this.service.carUseHist$.pipe().subscribe(res => {
+      console.dir('### setSubscribe is working!!');
+      // res
+      this.dataSource.data = res;
+
+      // this.TABLE_DATA = res;
+    });
   }
 
   // 차량선택 input box 내 List 조회용
   getHistCarList() {
+    // const that = this;
     this.service.getHistCarSelectionList()
       .subscribe(
         this.getHistCarListOk(),
@@ -77,12 +99,18 @@ export class HistorySearchComponent implements OnInit {
 
   // 서버로 부터 받아온 response SelectionListModel 배열에 담아 html 에서 사용할 수 있도록 함.
   getHistCarListOk() {
-    return (res: SelectionListModel[]) => this.histCarList = res;
+    return (res => {
+      //hat.TABLE_DATA = res;
+      res = [{ dateFrom: new Date(), dateTo: new Date(), driverDept: 'APP서비스그룹', driverNm: '손병철', useType: '업무용', usePurs: '회의 참석', usePursDetail: '발주처 워크샵 참여', driveDist: 5, accumMileage: 2000, dest: '속초', dropby: '명동', fueling: 60, histCar: '' }];
+      this.service.carUseHist$.emit(res);
+    });
   }
 
   // 서버 통신 시, error 처리
   getHistCarListError() {
-    return error => console.log(error);
+    return (error => {
+      console.log(error);
+    });
   }
 
   // server 와의 통신을 위해 date format 변경
@@ -109,7 +137,7 @@ export class HistorySearchComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.driverNm + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.drivernm + 1}`;
   }
 
   search() {
@@ -121,29 +149,29 @@ export class HistorySearchComponent implements OnInit {
   }
 
   searchRecordListOK() {
-    return (res: InputFieldsModel[]) => this.recordList = res;
+    return (res => {
+      // this.recordList = res;
+      //res = { dateFrom: new Date(), dateTo: new Date(), driverDept: 'APP서비스그룹', driverNm: '손병철', useType: '업무용', usePurs: '회의 참석', usePursDetail: '발주처 워크샵 참여', driveDist: 5, accumMileage: 2000, dest: '속초', dropby: '명동', fueling: 60, histCar: '' };
+
+      this.dataSource.data = res;
+      // this.service.carUseHist$.emit(res);
+    });
   }
 
   searchRecordListErr() {
-    return error => console.log(error);
+    return (error => {
+      console.log(error);
+    });
   }
+  // export class RecordDataSource extends DataSource<any> {
+  //   constructor(private service: RecordService) {
+  //     super();
+  //   }
+  //   connect(): Observable<InputFieldsModel[]> {
+  //     return this.service.getRecord();
+  //   }
+  //   disconnect() { }
+  // }
+
 
 }
-// export class RecordDataSource extends DataSource<any> {
-//   constructor(private service: RecordService) {
-//     super();
-//   }
-//   connect(): Observable<InputFieldsModel[]> {
-//     return this.service.getRecord();
-//   }
-//   disconnect() { }
-// }
-
-
-
-// TODO : 서버로부터 data를 받아와서 arrary 방식으로 데이터 넣는 코딩 필요
-// const TABLE_DATA: InputFieldsModel[] = [
-
-//   { dateFrom: new Date(), dateTo: new Date(), driverDept: 'APP서비스그룹', driverNm: '손병철', useType: '업무용', usePurs: '회의 참석', usePursDetail: '발주처 워크샵 참여', driveDist: 5, accumMileage: 2000, dest: '속초', dropby: '명동', fueling: 60, histCar: '' },
-
-// ];

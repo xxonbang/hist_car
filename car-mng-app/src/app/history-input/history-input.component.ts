@@ -49,10 +49,10 @@ export class HistoryInputComponent implements OnInit {
     this.getUsePursList();
 
     this.historyInputForm = new FormGroup({
-      dateFrom: new FormControl(this.record.dateFrom, [Validators.required]),
+      dateFrom: new FormControl(this.record.datefrom, [Validators.required]),
       dateTo: new FormControl(),
       driverDept: new FormControl(),
-      driverNm: new FormControl(this.record.driverNm, [Validators.required, Validators.minLength(10)]),
+      driverNm: new FormControl(this.record.drivernm, [Validators.required, Validators.minLength(10)]),
       useType: new FormControl(),
       usePurs: new FormControl(),
       usePursDetail: new FormControl(),
