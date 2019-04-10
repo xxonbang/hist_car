@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -27,11 +29,12 @@ export class HistorySearchComponent implements OnInit {
 
   // 모든 input box 에 대한 입력 값들을 받게 될 record 변수를 InputFieldsModel 타입으로 생성
   record = new InputFieldsModel();
+  recordList: InputFieldsModel[];
 
   // table 의 header 부분 컬럼들 셋팅
-  displayedColumns: string[] = ['select', 'dateFrom', 'dateTo', 'driverDep', 'driverNm', 'useType', 'usePurs', 'useDetail', 'mileage', 'accumMileage', 'destination', 'dropBy', 'fueling'];
+  displayedColumns: string[] = ['select', 'dateFrom', 'dateTo', 'driverDept', 'driverNm', 'useType', 'usePurs', 'usePursDetail', 'driveDist', 'accumMileage', 'dest', 'dropby', 'fueling'];
   // table 의 data 들에 대한 source
-  dataSource = new MatTableDataSource<InputFieldsModel>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource(this.recordList);
   // 체크박스용
   selection = new SelectionModel<InputFieldsModel>(true, []);
 
@@ -110,15 +113,37 @@ export class HistorySearchComponent implements OnInit {
   }
 
   search() {
-    this.service.getRecord();
+    this.service.getRecord()
+      .subscribe(
+        this.searchRecordListOK(),
+        this.searchRecordListErr()
+      )
   }
+
+  searchRecordListOK() {
+    return (res: InputFieldsModel[]) => this.recordList = res;
+  }
+
+  searchRecordListErr() {
+    return error => console.log(error);
+  }
+
 }
+// export class RecordDataSource extends DataSource<any> {
+//   constructor(private service: RecordService) {
+//     super();
+//   }
+//   connect(): Observable<InputFieldsModel[]> {
+//     return this.service.getRecord();
+//   }
+//   disconnect() { }
+// }
 
 
 
 // TODO : 서버로부터 data를 받아와서 arrary 방식으로 데이터 넣는 코딩 필요
-const ELEMENT_DATA: InputFieldsModel[] = [
+// const TABLE_DATA: InputFieldsModel[] = [
 
-  { dateFrom: new Date(), dateTo: new Date(), driverDep: 'APP서비스그룹', driverNm: '손병철', useType: '업무용', usePurs: '회의 참석', useDetail: '발주처 워크샵 참여', mileage: 5, accumMileage: 2000, destination: '속초', dropBy: '명동', fueling: 60, histCar: '' },
+//   { dateFrom: new Date(), dateTo: new Date(), driverDept: 'APP서비스그룹', driverNm: '손병철', useType: '업무용', usePurs: '회의 참석', usePursDetail: '발주처 워크샵 참여', driveDist: 5, accumMileage: 2000, dest: '속초', dropby: '명동', fueling: 60, histCar: '' },
 
-];
+// ];

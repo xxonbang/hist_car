@@ -2,15 +2,15 @@ export class InputFieldsModel {
 
     dateFrom: Date;
     dateTo: Date;
-    driverDep: string;
+    driverDept: string;
     driverNm: string;
     useType: string;
     usePurs: string;
-    useDetail: string;
-    mileage: number;
+    usePursDetail: string;
+    driveDist: number;
     accumMileage: number;
-    destination: string;
-    dropBy: string;
+    dest: string;
+    dropby: string;
     fueling: number;
     histCar: string;
 
