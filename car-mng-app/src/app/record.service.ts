@@ -2,8 +2,10 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { InputFieldsModel } from './input-fields-model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,6 @@ export class RecordService {
 
   // 서버 주소 setting
   // Server Main URL
-  // private carMngAppUrl = 'http://localhost:6060/';
   private baseUrl = '/rest';
 
   // 업무용/비업무용(사용형태) select list data 서버
@@ -27,6 +28,7 @@ export class RecordService {
   // http 통신을 위한 angular 의 httpcient 를 http 변수에 담음
   constructor(
     private http: HttpClient,
+    private router: Router
   ) { }
 
 
@@ -60,12 +62,18 @@ export class RecordService {
   addInputData(record: InputFieldsModel) {
 
     // return this.http.post<InputFieldsModel>(this.baseUrl + this.recordListUrl, record, { headers: this.getHttpHeaders() });
-    
-    return this.http.post<InputFieldsModel>(this.baseUrl + this.recordListUrl, record, { headers: this.getHttpHeaders() }).pipe().subscribe((ok => {
-      console.dir(ok);
-    }), (err => {
-      console.dir(err);
-    }));
+
+    return this.http.post<InputFieldsModel>(this.baseUrl + this.recordListUrl, record, { headers: this.getHttpHeaders() })
+      .subscribe((ok => {
+        this.goToMainPage();
+        alert('입력완료');
+      }), (err => {
+        console.dir(err);
+      }));
+  }
+
+  goToMainPage() {
+    this.router.navigate(['/main']);
   }
 
   login() {
@@ -84,19 +92,6 @@ export class RecordService {
     });
 
     this.http.post<InputFieldsModel>(this.baseUrl + '/auth/login', body).pipe().subscribe(ok, err);
-  }
-
-  carUsageList() {
-    const ok = (res => {
-      console.dir('success: ' + JSON.stringify(res));
-
-    });
-
-    const err = (res => {
-      console.dir('error');
-    });
-
-    this.http.get<InputFieldsModel>(this.baseUrl + '/car-list', { headers: this.getHttpHeaders() }).pipe().subscribe(ok, err);
   }
 
   // 뒤로 가기 기능

@@ -148,4 +148,9 @@ export class HistorySearchComponent implements OnInit {
     return (error) => console.log(error);
   }
 
+  // 닫기 기능 호출
+  close(): void {
+    this.service.goToMainPage();
+  }
+
 }

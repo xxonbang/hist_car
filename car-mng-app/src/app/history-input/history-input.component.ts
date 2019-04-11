@@ -150,20 +150,17 @@ export class HistoryInputComponent implements OnInit {
     this.historyInputForm.controls['dateto'].setValue(this.transformDate(this.historyInputForm.controls['dateto'].value));
 
     this.service.addInputData(this.historyInputForm.value);
-    
-  }
-
-  // 닫기 기능
-  close(): void {
 
   }
 
+  // 로그인 기능 호출
   login() {
     this.service.login();
   }
 
-  carUsageList() {
-    this.service.carUsageList();
+  // 닫기 기능 호출
+  close(): void {
+    this.service.goToMainPage();
   }
 
 }
