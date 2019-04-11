@@ -49,15 +49,15 @@ export class HistoryInputComponent implements OnInit {
     this.getUsePursList();
 
     this.historyInputForm = new FormGroup({
-      dateFrom: new FormControl(this.record.datefrom, [Validators.required]),
-      dateTo: new FormControl(),
-      driverDept: new FormControl(),
-      driverNm: new FormControl(this.record.drivernm, [Validators.required, Validators.minLength(10)]),
-      useType: new FormControl(),
-      usePurs: new FormControl(),
-      usePursDetail: new FormControl(),
-      driveDist: new FormControl(),
-      accumMileage: new FormControl(),
+      datefrom: new FormControl(this.record.datefrom, [Validators.required]),
+      dateto: new FormControl(),
+      driverdept: new FormControl(),
+      drivernm: new FormControl(this.record.drivernm, [Validators.required, Validators.minLength(10)]),
+      usetype: new FormControl(),
+      usepurs: new FormControl(),
+      usepursdetail: new FormControl(),
+      drivedist: new FormControl(),
+      accummileage: new FormControl(),
       dest: new FormControl(),
       dropby: new FormControl(),
       fueling: new FormControl(),
@@ -65,8 +65,8 @@ export class HistoryInputComponent implements OnInit {
     });
 
     const today = new Date();
-    this.historyInputForm.controls['dateFrom'].setValue(today);
-    this.historyInputForm.controls['dateTo'].setValue(today);
+    this.historyInputForm.controls['datefrom'].setValue(today);
+    this.historyInputForm.controls['dateto'].setValue(today);
 
     // this.historyInputForm.setValue({ useType: '- 선택 -' });
     // this.historyInputForm.controls['useType'].setValue({ "name": "- 선택 -" });
@@ -141,13 +141,16 @@ export class HistoryInputComponent implements OnInit {
   // inputFrom.value 값을 받아와 sevice의 addInputData 로 전달 후, subscribe 콜백 함수로 받아온 data를 recordList 배열에 추가
   add(): void {
 
-    // console.dir(JSON.stringify(this.historyInputForm.value));
+    if (!this.historyInputForm.value) {
+      return alert('입력 조건을 확인하세요.');
+    }
 
-    if (!this.historyInputForm.value) { return; }
-    this.service.addInputData(this.historyInputForm.value)
-      .subscribe(data => {
-        this.recordList.push(data);
-      });
+    // server 쪽에서 date data 를 받을 때, yyyy-mm-dd 형태로 받게 되어 있으므로, 해당 형태로 날짜를 변환해서 보내기 위함
+    this.historyInputForm.controls['datefrom'].setValue(this.transformDate(this.historyInputForm.controls['datefrom'].value));
+    this.historyInputForm.controls['dateto'].setValue(this.transformDate(this.historyInputForm.controls['dateto'].value));
+
+    this.service.addInputData(this.historyInputForm.value);
+    
   }
 
   // 닫기 기능

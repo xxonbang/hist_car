@@ -56,8 +56,16 @@ export class RecordService {
   }
 
   /** POST: 서버에 data를 저장 */
-  addInputData(record: InputFieldsModel): Observable<InputFieldsModel> {
-    return this.http.post<InputFieldsModel>(this.baseUrl + this.recordListUrl, record, { headers: this.getHttpHeaders() })
+  //: Observable<InputFieldsModel>
+  addInputData(record: InputFieldsModel) {
+
+    // return this.http.post<InputFieldsModel>(this.baseUrl + this.recordListUrl, record, { headers: this.getHttpHeaders() });
+    
+    return this.http.post<InputFieldsModel>(this.baseUrl + this.recordListUrl, record, { headers: this.getHttpHeaders() }).pipe().subscribe((ok => {
+      console.dir(ok);
+    }), (err => {
+      console.dir(err);
+    }));
   }
 
   login() {
