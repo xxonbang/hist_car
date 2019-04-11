@@ -1,0 +1,5 @@
+.selected {
+  color: white !important;
+  background-color: #007bff;
+  padding: .5rem 1rem !important;
+}

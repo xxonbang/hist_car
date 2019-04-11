@@ -18,21 +18,22 @@
         <ul class="nav nav-pills flex-column">
 
           <li class="nav-item">
-            <a class="nav-link" [class.selected]="router.url ==='/history-input'" routerLink="/history-input">사용내역
+            <a class="nav-link" routerLink="history-input" [class.selected]="router.url === '/main/history-input'">사용내역
               입력</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" [class.selected]="router.url ==='/history-search'" routerLink="/history-search">사용내역
-              조회</a>
+            <a class="nav-link" routerLink="history-search"
+              [class.selected]="router.url === '/main/history-search'">사용내역 조회</a>
           </li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" [class.selected]="router.url ==='/car-management'"
-              data-toggle="dropdown" routerLink="/car-management" role="button" aria-expanded="false">차량관리</a>
+            <a class="nav-link dropdown-toggle" routerLink="car-management"
+              [class.selected]="router.url === '/main/car-management'" data-toggle="dropdown" role="button"
+              aria-expanded="false">차량관리</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" routerLink="/car-management">차량정보 조회</a>
-              <a class="dropdown-item" routerLink="/car-management">차량 등록/삭제</a>
+              <a class="dropdown-item" routerLink="car-management">차량정보 조회</a>
+              <a class="dropdown-item" routerLink="car-management">차량 등록/삭제</a>
             </div>
           </li>
 
@@ -41,5 +42,6 @@
     </div>
   </div>
 
-  <h1>Main</h1>
-</div>
+  <div class="main-wrapper">
+    <router-outlet></router-outlet>
+  </div>
