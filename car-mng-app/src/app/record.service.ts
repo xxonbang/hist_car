@@ -91,7 +91,7 @@ export class RecordService {
       console.dir('error');
     });
 
-    this.http.post<InputFieldsModel>(this.baseUrl + '/auth/login', body).pipe().subscribe(ok, err);
+    this.http.post<InputFieldsModel>(this.baseUrl + '/auth/login', body).subscribe(ok, err);
   }
 
   // 뒤로 가기 기능

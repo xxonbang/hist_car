@@ -12,7 +12,8 @@ const routes: Routes = [
   { path: 'history-input', component: HistoryInputComponent },
   { path: 'history-search', component: HistorySearchComponent },
   { path: 'car-management', component: CarManagementComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: '/login', pathMatch: 'full' }, // 잘못된 URL을 사용했을때 Login 페이지로 돌려보냄.
 ];
 
 @NgModule({
