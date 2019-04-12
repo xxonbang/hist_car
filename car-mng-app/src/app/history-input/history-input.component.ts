@@ -153,11 +153,6 @@ export class HistoryInputComponent implements OnInit {
 
   }
 
-  // 로그인 기능 호출
-  login() {
-    this.service.login();
-  }
-
   // 닫기 기능 호출
   close(): void {
     this.service.goToMainPage();

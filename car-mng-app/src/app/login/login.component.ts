@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { LoginService } from './login.service'
 
 @Component({
@@ -9,15 +10,21 @@ import { LoginService } from './login.service'
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  submitted = false;
 
   constructor(
-    // private formBuilder: FormBuilder,
-    // private router: Router,
-    // private loginService: LoginService
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private loginService: LoginService
   ) { }
+
+  login() {
+    this.loginService.login();
+  }
 
   // onSubmit() { 
   //   if (this.loginForm.invalid) {
@@ -49,9 +56,31 @@ export class LoginComponent implements OnInit, AfterViewInit {
   // }
 
   ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      userid: ['', Validators.required],
+      userPassword: ['', Validators.required]
+    });
   }
 
-  ngAfterViewInit() {
-  }
+  get f() { return this.loginForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+        return alert('ID 와 비밀번호가 유효하지 않습니다');
+    }
+
+    this.loginService.login(this.f.userId.value, this.f.userPassword.value)
+        .subscribe(
+            data => {
+                this.router.navigate(['/main']);
+            },
+            error => {
+                alert(error);
+            });
+}
+
 
 }
