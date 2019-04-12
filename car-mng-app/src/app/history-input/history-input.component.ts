@@ -11,6 +11,7 @@ import { SelectionListModel } from '../selection-list-model';
   styleUrls: ['./history-input.component.css'],
   providers: [DatePipe]
 })
+
 export class HistoryInputComponent implements OnInit {
 
   // 모든 input box 에 대한 입력 값들을 받게 될 record 변수를 CommonModel 타입으로 생성
@@ -35,7 +36,7 @@ export class HistoryInputComponent implements OnInit {
   constructor(
     private service: RecordService,
     private datePipe: DatePipe,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) { }
 
 
@@ -153,9 +154,11 @@ export class HistoryInputComponent implements OnInit {
 
   }
 
-  // 닫기 기능 호출
+  // 닫기 기능 호출, localStorage 내 'accessToken' 정보를 제거하고 login Page로 리다이렉션
   close(): void {
     this.service.goToMainPage();
   }
 
 }
+
+

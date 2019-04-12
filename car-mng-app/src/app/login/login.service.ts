@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 import { InputFieldsModel } from '../input-fields-model';
 
@@ -23,11 +24,28 @@ export class LoginService {
     public router: Router
   ) { }
 
-  login() {
-    const body = {
-      username: 'admin',
-      password: 'admin1234'
-    };
+
+
+  // login(userId: string, userPassword: string) {
+  //   return this.http.post<any>(this.baseUrl + '/auth/login', { username: userId, password: userPassword })
+  //     .pipe(map(res => {
+
+  //       if (res && res.token) {
+  //         localStorage.setItem('accessToken', JSON.stringify(res));
+  //         this.router.navigate(['/main']);
+  //       }
+  //       return res;
+  //     }));
+  // }
+
+
+
+  ////////////////////////////////////
+  login(userId: string, userPassword: string) {
+    // const body = {
+    //   username: 'admin',
+    //   password: 'admin1234'
+    // };
 
     const ok = (res => {
       console.dir('success');
@@ -36,12 +54,19 @@ export class LoginService {
     });
 
     const err = (res => {
-      console.dir('error');
+      alert('ID 와 PASSWORD 를 확인하세요');
     });
 
-    this.http.post<InputFieldsModel>(this.baseUrl + '/auth/login', body).subscribe(ok, err);
+    this.http.post<InputFieldsModel>(this.baseUrl + '/auth/login', { username: userId, password: userPassword }).subscribe(ok, err);
   }
 
+  logout() {
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['/login']);
+  }
+
+
+  //////////////////////////////////////
   // serviceName = 'login';
   // url: string = environment.serverPrefix + `/${this.serviceName}`;
 

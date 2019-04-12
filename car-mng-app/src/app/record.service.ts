@@ -54,7 +54,8 @@ export class RecordService {
 
   // server 로 부터 차량사용기록 data 를 받아와 table 을 그리는 쪽으로 전달, 혹은 직접 그리게..?
   getRecord(): Observable<InputFieldsModel[]> {
-    return this.http.get<InputFieldsModel[]>(this.baseUrl + this.recordListUrl, { headers: this.getHttpHeaders() })
+    return this.http.get<InputFieldsModel[]>(this.baseUrl + this.recordListUrl + "?drivernm=고정민", { headers: this.getHttpHeaders() })
+    // return this.http.get<InputFieldsModel[]>(this.baseUrl + this.recordListUrl + "?drivernm=고정민", { headers: this.getHttpHeaders() })
   }
 
   /** POST: 서버에 data를 저장 */
@@ -76,23 +77,23 @@ export class RecordService {
     this.router.navigate(['/main']);
   }
 
-  login() {
-    const body = {
-      username: 'admin',
-      password: 'admin1234'
-    };
+  // login() {
+  //   const body = {
+  //     username: 'admin',
+  //     password: 'admin1234'
+  //   };
 
-    const ok = (res => {
-      console.dir('success');
-      localStorage.setItem('accessToken', res.accessToken);
-    });
+  //   const ok = (res => {
+  //     console.dir('success');
+  //     localStorage.setItem('accessToken', res.accessToken);
+  //   });
 
-    const err = (res => {
-      console.dir('error');
-    });
+  //   const err = (res => {
+  //     console.dir('error');
+  //   });
 
-    this.http.post<InputFieldsModel>(this.baseUrl + '/auth/login', body).subscribe(ok, err);
-  }
+  //   this.http.post<InputFieldsModel>(this.baseUrl + '/auth/login', body).subscribe(ok, err);
+  // }
 
   // 뒤로 가기 기능
   goBack() { }

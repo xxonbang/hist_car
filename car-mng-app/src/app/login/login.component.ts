@@ -22,9 +22,7 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService
   ) { }
 
-  login() {
-    this.loginService.login();
-  }
+
 
   // onSubmit() { 
   //   if (this.loginForm.invalid) {
@@ -57,30 +55,37 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      userid: ['', Validators.required],
+      userId: ['', Validators.required],
       userPassword: ['', Validators.required]
     });
   }
 
   get f() { return this.loginForm.controls; }
 
-  onSubmit() {
-    this.submitted = true;
+  login() {
+    this.loginService.login(this.f.userId.value, this.f.userPassword.value);
+  }
 
-    // stop here if form is invalid
-    if (this.loginForm.invalid) {
-        return alert('ID 와 비밀번호가 유효하지 않습니다');
-    }
+  onEnter() {
+    this.loginService.login(this.f.userId.value, this.f.userPassword.value);
+  }
+  //   onSubmit() {
+  //     this.submitted = true;
 
-    this.loginService.login(this.f.userId.value, this.f.userPassword.value)
-        .subscribe(
-            data => {
-                this.router.navigate(['/main']);
-            },
-            error => {
-                alert(error);
-            });
-}
+  //     // stop here if form is invalid
+  //     if (this.loginForm.invalid) {
+  //         return alert('ID 와 비밀번호가 유효하지 않습니다');
+  //     }
+
+  //     this.loginService.login(this.f.userId.value, this.f.userPassword.value)
+  //         .subscribe(
+  //             data => {
+  //                 this.router.navigate(['/main']);
+  //             },
+  //             error => {
+  //                 alert(error);
+  //             });
+  // }
 
 
 }

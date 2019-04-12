@@ -43,7 +43,7 @@ export class HistorySearchComponent implements OnInit {
     // 날짜를 yyyy-mm-dd 형태로 구현해 주기 위한 DatePipe 생성
     private datePipe: DatePipe,
     // RecordService 사용을 위한 sevice 생성
-    private service: RecordService
+    private service: RecordService,
   ) { }
 
   // pagination
@@ -148,7 +148,7 @@ export class HistorySearchComponent implements OnInit {
     return (error) => console.log(error);
   }
 
-  // 닫기 기능 호출
+  // 닫기 기능 호출, localStorage 내 'accessToken' 정보를 제거하고 login Page로 리다이렉션
   close(): void {
     this.service.goToMainPage();
   }
