@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 
 import { LoginService } from './login.service'
 
@@ -13,12 +12,10 @@ import { LoginService } from './login.service'
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  submitted = false;
+  isValidFormSubmitted = null;
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
     private loginService: LoginService
   ) { }
 
@@ -55,8 +52,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      userId: ['', Validators.required],
-      userPassword: ['', Validators.required]
+      userId: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
+      userPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
     });
   }
 

@@ -34,7 +34,7 @@ export class RecordService {
 
   // 모든 input box 에 대한 프로퍼티를 포함한 InputFieldsModel 을 record, allParams 변수에 담음
   record = new InputFieldsModel();
-  allParams = new InputFieldsModel();
+  searchConditions = new InputFieldsModel();
 
   // eventEmit 형태로 차량조회, 사용목적, 사용형태 List 를 생성
   histCarList$: EventEmitter<Map<string, string>> = new EventEmitter();
@@ -47,9 +47,9 @@ export class RecordService {
   // saveInputData(allParams) { }
 
   // 저장 기능 수행 시, 호출되어 input box 들로부터 입력 된 parameter 값들을 allParams 변수에 담아 setRecord 로 보내며 호출
-  setParamData(recordParam: InputFieldsModel) {
-    this.allParams = recordParam;
-    this.addInputData(this.allParams);
+  setSearchConditions(searchConditions: InputFieldsModel) {
+    this.searchConditions = searchConditions;
+    // this.addInputData(this.searchConditions);
   }
 
   // server 로 부터 차량사용기록 data 를 받아와 table 을 그리는 쪽으로 전달, 혹은 직접 그리게..?
@@ -66,7 +66,7 @@ export class RecordService {
 
     return this.http.post<InputFieldsModel>(this.baseUrl + this.recordListUrl, record, { headers: this.getHttpHeaders() })
       .subscribe((ok => {
-        this.goToMainPage();
+        // this.goToMainPage();
         alert('입력완료');
       }), (err => {
         console.dir(err);

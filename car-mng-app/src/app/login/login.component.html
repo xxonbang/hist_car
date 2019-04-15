@@ -1,5 +1,5 @@
 <div id="login" class="row h-100">
-  <form [formGroup]="loginForm" class="form-login">
+  <form [formGroup]="loginForm" class="form-login" (ngSubmit)="login()">
 
     <div class="wrapper">
       <img class="mb-4" src="/assets/images/hanjinCI.png" width="110" height="110" />
@@ -10,11 +10,20 @@
         <input (keyup.enter)="onEnter()" type="text" formControlName="userId" class="form-control" placeholder="ID"
           autofocus />
       </div>
+      <!-- <div *ngIf="loginForm.controls['userId'].touched && loginForm.controls['userId'].hasError('maxLength')"> 10 max </div> -->
+
+      <div style="color: red" *ngIf="loginForm.controls['userId'].errors?.maxlength">Maximum of ID 15 characters</div>
+      <div style="color: red" *ngIf="loginForm.controls['userId'].errors?.minlength">Minimum of PW 4 characters</div>
 
       <div class="form-group">
         <label for="userPassword" class="sr-only">userPassword</label>
         <input (keyup.enter)="onEnter()" type="password" formControlName="userPassword" class="form-control"
           placeholder="PASSWORD" />
+      </div>
+
+      <div style="color: red" *ngIf="loginForm.controls['userPassword'].errors?.maxlength">Maximum of ID 15 characters
+      </div>
+      <div style="color: red" *ngIf="loginForm.controls['userPassword'].errors?.minlength">Minimum of PW 8 characters
       </div>
 
       <div class="checkbox mb-3">
@@ -23,7 +32,8 @@
         </label>
       </div>
 
-      <input (click)="login()" type="button" value="Login" class="btn btn-lg btn-primary btn-block" />
+      <button type="submit" value="Login" class="btn btn-lg btn-primary btn-block"
+        [disabled]="!loginForm.valid">Login</button>
 
       <div id="formFooter">
         <a class="underlineHover" href="#">Forgot Password?</a>

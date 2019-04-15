@@ -57,7 +57,8 @@ export class LoginService {
       alert('ID 와 PASSWORD 를 확인하세요');
     });
 
-    this.http.post<InputFieldsModel>(this.baseUrl + '/auth/login', { username: userId, password: userPassword }).subscribe(ok, err);
+    this.http.post<InputFieldsModel>(this.baseUrl + '/auth/login', { username: userId, password: userPassword })
+      .subscribe(ok, err);
   }
 
   logout() {

@@ -130,13 +130,34 @@ export class HistorySearchComponent implements OnInit {
   }
 
   // search 버튼 클릭 시, service의 getRecord()를 호출 -> res 값을 받아와 OK 와 Err 로 전달
+  // search() {
+  //   this.service.getRecord()
+  //     .subscribe(
+  //       this.searchRecordListOK(),
+  //       this.searchRecordListErr()
+  //     )
+  // }
+
   search() {
+
+    //   const ok = (res => {
+    //     this.searchRecordListOK();
+    //   });
+    //   const err =(res => {
+    //     this.searchRecordListErr();
+    //   });
+
+    //   this.service.setSearchConditions(this.historyInputForm.value)
+    //     .subscribe(ok, err)
+    // }
+
     this.service.getRecord()
       .subscribe(
         this.searchRecordListOK(),
         this.searchRecordListErr()
       )
   }
+
 
   // search 기능 OK 시 res 값을 dataSource 에 넣어줌
   searchRecordListOK() {

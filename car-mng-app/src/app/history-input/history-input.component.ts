@@ -152,6 +152,7 @@ export class HistoryInputComponent implements OnInit {
 
     this.service.addInputData(this.historyInputForm.value);
 
+    this.historyInputForm.reset();
   }
 
   // 닫기 기능 호출, localStorage 내 'accessToken' 정보를 제거하고 login Page로 리다이렉션
