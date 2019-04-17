@@ -9,9 +9,9 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
 
-import { MaterialModule } from './material.module';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, MatCheckboxModule } from '@angular/material';
+// import { MaterialModule } from './material.module';
+// import { MatTableModule } from '@angular/material/table';
+// import { MatPaginatorModule, MatCheckboxModule } from '@angular/material';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { customHttpInterceptor } from './app.interceptor';
@@ -26,10 +26,10 @@ import { customHttpInterceptor } from './app.interceptor';
   imports: [
     BrowserModule,
     AppRouterModule,
-    MaterialModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatCheckboxModule,
+    // MaterialModule,
+    // MatTableModule,
+    // MatPaginatorModule,
+    // MatCheckboxModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

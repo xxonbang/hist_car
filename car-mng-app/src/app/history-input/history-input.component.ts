@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { InputFieldsModel } from '../input-fields-model';
 import { DatePipe } from '@angular/common';
 import { RecordService } from '../record.service';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { SelectionListModel } from '../selection-list-model';
+
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-history-input',
   templateUrl: './history-input.component.html',
@@ -13,6 +15,8 @@ import { SelectionListModel } from '../selection-list-model';
 })
 
 export class HistoryInputComponent implements OnInit {
+
+  submitted = false;
 
   // 모든 input box 에 대한 입력 값들을 받게 될 record 변수를 CommonModel 타입으로 생성
   record = new InputFieldsModel();
@@ -37,33 +41,51 @@ export class HistoryInputComponent implements OnInit {
     private service: RecordService,
     private datePipe: DatePipe,
     private formBuilder: FormBuilder,
+    private router: Router,
   ) { }
 
 
   ngOnInit() {
-    // this.record.dateFrom = new Date();
-    // this.record.dateTo = new Date();
 
-
+    // input-box 들 중 drop-down 용 List 값을 Page loding 시 넣어주기 위함
     this.getHistCarList();
     this.getUseTypeList();
     this.getUsePursList();
 
-    this.historyInputForm = new FormGroup({
-      datefrom: new FormControl(this.record.datefrom, [Validators.required]),
-      dateto: new FormControl(),
-      driverdept: new FormControl(),
-      drivernm: new FormControl(this.record.drivernm, [Validators.required, Validators.minLength(10)]),
-      usetype: new FormControl(),
-      usepurs: new FormControl(),
-      usepursdetail: new FormControl(),
-      drivedist: new FormControl(),
-      accummileage: new FormControl(),
-      dest: new FormControl(),
-      dropby: new FormControl(),
-      fueling: new FormControl(),
-      histCar: new FormControl(),
+    this.historyInputForm = this.formBuilder.group({
+      datefrom: [this.record.datefrom, [Validators.required]],
+      dateto: [this.record.dateto, [Validators.required]],
+      histCar: [this.record.histCar, [Validators.required]],
+      driverdept: [this.record.driverdept, [Validators.required]],
+      drivernm: [this.record.drivernm, [Validators.required]],
+      usetype: [this.record.usetype, [Validators.required]],
+      usepurs: [this.record.usepurs, [Validators.required]],
+      usepursdetail: [this.record.usepursdetail, [Validators.required]],
+      dest: [this.record.dest, [Validators.required]],
+      dropby: [this.record.dropby],
+      drivedist: [this.record.drivedist, [Validators.required]],
+      // accummileage: new FormControl(),
+      fueling: [this.record.fueling],
     });
+
+
+
+
+    // this.historyInputForm = new FormGroup({
+    //   datefrom: new FormControl(this.record.datefrom, [Validators.required]),
+    //   dateto: new FormControl(this.record.dateto, [Validators.required]),
+    //   histCar: new FormControl(this.record.histCar, [Validators.required]),
+    //   driverdept: new FormControl(this.record.driverdept, [Validators.required]),
+    //   drivernm: new FormControl(this.record.drivernm, [Validators.required, Validators.minLength(10)]),
+    //   usetype: new FormControl(this.record.usetype, [Validators.required]),
+    //   usepurs: new FormControl(this.record.usepurs, [Validators.required]),
+    //   usepursdetail: new FormControl(this.record.usepursdetail, [Validators.required]),
+    //   dest: new FormControl(this.record.dest, [Validators.required]),
+    //   dropby: new FormControl(this.record.dropby),
+    //   drivedist: new FormControl(this.record.drivedist, [Validators.required]),
+    //   // accummileage: new FormControl(),
+    //   fueling: new FormControl(this.record.fueling),
+    // });
 
     const today = new Date();
     this.historyInputForm.controls['datefrom'].setValue(today);
@@ -74,6 +96,9 @@ export class HistoryInputComponent implements OnInit {
     // this.historyInputForm.controls['usePurs'].setValue({ "name": "- 선택 -" });
 
   }
+
+  get f() { return this.historyInputForm.controls; }
+
 
   // drop-box 형 input box 내 기본 값을 '- 선택 -' 으로 주기 위해 메소드로 만들어 ngOninit에 넣어보려 했었음.
   // setDefaultSelectionList() {
@@ -142,7 +167,10 @@ export class HistoryInputComponent implements OnInit {
   // inputFrom.value 값을 받아와 sevice의 addInputData 로 전달 후, subscribe 콜백 함수로 받아온 data를 recordList 배열에 추가
   add(): void {
 
-    if (!this.historyInputForm.value) {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.historyInputForm.invalid) {
       return alert('입력 조건을 확인하세요.');
     }
 
@@ -152,7 +180,12 @@ export class HistoryInputComponent implements OnInit {
 
     this.service.addInputData(this.historyInputForm.value);
 
-    this.historyInputForm.reset();
+    this.refresh();
+    // this.historyInputForm.reset();
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
   // 닫기 기능 호출, localStorage 내 'accessToken' 정보를 제거하고 login Page로 리다이렉션

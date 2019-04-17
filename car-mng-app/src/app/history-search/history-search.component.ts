@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -25,16 +25,15 @@ export class HistorySearchComponent implements OnInit {
   // 차량조희 input box 내 List 설정용 프로퍼티
   histCarList: SelectionListModel[];
 
-  // 모든 input box 에 대한 입력 값들을 받게 될 record 변수를 InputFieldsModel 타입으로 생성
+  // 모든 input box 에 대한 하나의 입력 값들을 받게 될 record 변수를 InputFieldsModel 타입으로 생성
   record = new InputFieldsModel();
-
-  // 검색 결과를 담을 recordList 변수를 inputFieldsModel 타입의 배열로 생성
-  recordList: InputFieldsModel[];
+  // 모든 기록에 대한 검색 결과를 담을 allRecords 변수를 inputFieldsModel 타입의 배열로 생성
+  allRecords: InputFieldsModel[];
 
   // table 의 header 부분 컬럼들 셋팅
   displayedColumns: string[] = ['select', 'seq', 'datefrom', 'dateto', 'driverdept', 'drivernm', 'usetype', 'usepurs', 'usepursdetail', 'drivedist', 'accummileage', 'dest', 'dropby', 'fueling', 'carid'];
   // table 의 data 들에 대한 source
-  dataSource = new MatTableDataSource(this.recordList);
+  dataSource = new MatTableDataSource(this.allRecords);
   // 체크박스용
   selection = new SelectionModel<InputFieldsModel>(true, []);
 
@@ -46,11 +45,16 @@ export class HistorySearchComponent implements OnInit {
     private service: RecordService,
   ) { }
 
-  // pagination
+  // table sort
+  @ViewChild(MatSort) sort: MatSort;
+  // table pagination
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
   ngOnInit() {
+
+    // table 내 sort 기능을 위한 선언
+    this.dataSource.sort = this.sort;
 
     // 페이지 loading 시 차량목록을 drop-box 에 바로 loading 해주기 위하여 ngOnInit에 포함
     this.getHistCarList();
@@ -60,15 +64,15 @@ export class HistorySearchComponent implements OnInit {
 
     // page 내 input box 들에 대한 Form 선언
     this.historyInputForm = new FormGroup({
-      dateFrom: new FormControl(this.record.datefrom, [Validators.required]),
-      dateTo: new FormControl(),
+      datefrom: new FormControl(),
+      dateto: new FormControl(),
       histCar: new FormControl()
     });
 
     // 사용 일자 input box 내 default 로 오늘 날짜를 기입하기 위한 기능
-    const today = new Date();
-    this.historyInputForm.controls['dateFrom'].setValue(today);
-    this.historyInputForm.controls['dateTo'].setValue(today);
+    // const today = new Date();
+    // this.historyInputForm.controls['datefrom'].setValue(today);
+    // this.historyInputForm.controls['dateto'].setValue(today);
 
   }
 
@@ -83,7 +87,7 @@ export class HistorySearchComponent implements OnInit {
   //   });
   // }
 
-  // 차량선택 input box 내 List 조회용
+  // 차량선택 input box 내 List 조회용, Page 생성 시 차량목록을 서버에 요청 및 응답 받아 화면 drop-box 내에 표시
   getHistCarList() {
     this.service.getHistCarSelectionList()
       .subscribe(
@@ -96,7 +100,6 @@ export class HistorySearchComponent implements OnInit {
   getHistCarListOk() {
     return (res: SelectionListModel[]) => this.histCarList = res;
   }
-
   // 서버 통신 시, error 처리
   getHistCarListError() {
     return (error) => console.log(error);
@@ -155,6 +158,31 @@ export class HistorySearchComponent implements OnInit {
       .subscribe(
         this.searchRecordListOK(),
         this.searchRecordListErr()
+      )
+
+    // this.service.setSearchConditions(this.historyInputForm.value)
+    //   .subscribe((res: InputFieldsModel[]) => {
+    //     let res = res;
+    //     this.searchRecordListOK(res),
+    //       this.searchRecordListErr(res)
+    //   });
+  }
+
+  getRecordsByConditions() {
+
+    // server 쪽에서 date data 를 받을 때, yyyy-mm-dd 형태로 받게 되어 있으므로, 해당 형태로 날짜를 변환해서 보내기 위함
+    this.historyInputForm.controls['datefrom'].setValue(this.transformDate(this.historyInputForm.controls['datefrom'].value));
+    this.historyInputForm.controls['dateto'].setValue(this.transformDate(this.historyInputForm.controls['dateto'].value));
+
+    this.service.getRecordsByConditions(this.historyInputForm.value)
+      .subscribe(
+        (res) => {
+          if (res.length > 0) {
+            this.dataSource.data = res;
+          } else {
+            alert('검색조건을 확인하세요');
+          }
+        }
       )
   }
 

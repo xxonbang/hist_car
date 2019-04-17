@@ -34,7 +34,7 @@ export class RecordService {
 
   // 모든 input box 에 대한 프로퍼티를 포함한 InputFieldsModel 을 record, allParams 변수에 담음
   record = new InputFieldsModel();
-  searchConditions = new InputFieldsModel();
+  conditions = new InputFieldsModel();
 
   // eventEmit 형태로 차량조회, 사용목적, 사용형태 List 를 생성
   histCarList$: EventEmitter<Map<string, string>> = new EventEmitter();
@@ -43,18 +43,35 @@ export class RecordService {
 
   carUseHist$: EventEmitter<InputFieldsModel[]> = new EventEmitter();
 
-  // input box 들에 입력 된 입력 된 parameter 값들을 서버로 전달 및 저장요청
-  // saveInputData(allParams) { }
+
+  // 검색 시 조건을 설정하여 server에 요청할 때, 화면의 input-box 내의 값을 server 와 통신할 수 있는 형태로 변형해 주는 기능 (ex. {dest: 집} -> dest: 집)
+  makeQueryString(params: any): string {
+    let result = '';
+    let prefix = '?';
+
+    const keys = Object.keys(params);
+    const values = Object.values(params);
+    if (keys !== null && keys.length > 0) {
+      // tslint:disable-next-line:forin
+      for (const idx in keys) {
+        result = result + prefix + keys[idx] + '=' + values[idx];
+        prefix = '&';
+      }
+    }
+    return result;
+  }
+
 
   // 저장 기능 수행 시, 호출되어 input box 들로부터 입력 된 parameter 값들을 allParams 변수에 담아 setRecord 로 보내며 호출
-  setSearchConditions(searchConditions: InputFieldsModel) {
-    this.searchConditions = searchConditions;
-    // this.addInputData(this.searchConditions);
+  getRecordsByConditions(conditions): Observable<InputFieldsModel[]> {
+    // const params = "?" + JSON.stringify(conditions);
+    const params = this.makeQueryString(conditions);
+    return this.http.get<InputFieldsModel[]>(this.baseUrl + this.recordListUrl + params, { headers: this.getHttpHeaders() })
   }
 
   // server 로 부터 차량사용기록 data 를 받아와 table 을 그리는 쪽으로 전달, 혹은 직접 그리게..?
   getRecord(): Observable<InputFieldsModel[]> {
-    return this.http.get<InputFieldsModel[]>(this.baseUrl + this.recordListUrl + "?drivernm=고정민", { headers: this.getHttpHeaders() })
+    return this.http.get<InputFieldsModel[]>(this.baseUrl + this.recordListUrl, { headers: this.getHttpHeaders() })
     // return this.http.get<InputFieldsModel[]>(this.baseUrl + this.recordListUrl + "?drivernm=고정민", { headers: this.getHttpHeaders() })
   }
 

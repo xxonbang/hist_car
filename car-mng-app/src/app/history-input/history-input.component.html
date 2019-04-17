@@ -1,7 +1,7 @@
 <div class="pt-5" style="margin-top: 10px;">
   <h1>Fill in</h1>
 
-  <div #inputForm [formGroup]="historyInputForm">
+  <form [formGroup]="historyInputForm" (ngSubmit)="add()">
 
     <div class="form-row">
       <label for="datepicker" class="col-form-label">사용 일자</label>
@@ -9,35 +9,55 @@
         <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 0px;"
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>시작일</mat-label>
-          <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD" formControlName="datefrom">
+          <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD" formControlName="datefrom"
+            [ngClass]="{ 'is-invalid': submitted && f.datefrom.errors }" />
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
+        <div *ngIf="submitted && f.datefrom.errors" class="invalid-feedback">
+          <div *ngIf="f.datefrom.errors.required">시작일을 선택하세요</div>
+        </div>
         <span style="margin-top: 20px; font-weight: bold; color: gray;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
         <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 30px;"
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>종료일</mat-label>
-          <input matInput [matDatepicker]="picker2" placeholder="YYYY-MM-DD" name="dateTo" formControlName="dateto">
+          <input matInput [matDatepicker]="picker2" placeholder="YYYY-MM-DD" formControlName="dateto"
+            [ngClass]="{ 'is-invalid': submitted && f.dateto.errors }" />
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
+        <div *ngIf="submitted && f.dateto.errors" class="invalid-feedback">
+          <div *ngIf="f.dateto.errors.required">종료일을 선택하세요</div>
+        </div>
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="selectCar" class="col-form-label">차량선택</label>
-        <select id="selectCar" class="form-control" formControlName="histCar">
+        <select id="selectCar" class="form-control" formControlName="histCar"
+          [ngClass]="{ 'is-invalid': submitted && f.histCar.errors }">
           <option [value]="item.code" *ngFor="let item of histCarList">{{item.name}}</option>
         </select>
+        <div *ngIf="submitted && f.histCar.errors" class="invalid-feedback">
+          <div *ngIf="f.histCar.errors.required">차량을 선택하세요</div>
+        </div>
       </div>
       <div class="form-group col-md-4">
         <label for="inputDpt" class="col-form-label">소속명</label>
-        <input type="text" class="form-control" placeholder="소속명" formControlName="driverdept">
+        <input type="text" class="form-control" placeholder="소속명" formControlName="driverdept"
+          [ngClass]="{ 'is-invalid': submitted && f.driverdept.errors }" />
+        <div *ngIf="submitted && f.driverdept.errors" class="invalid-feedback">
+          <div *ngIf="f.driverdept.errors.required">소속명을 입력하세요</div>
+        </div>
       </div>
       <div class="form-group col-md-4">
         <label for="inputName" class="col-form-label">성명</label>
-        <input type="text" class="form-control" placeholder="성명" formControlName="drivernm">
+        <input type="text" class="form-control" placeholder="성명" formControlName="drivernm"
+          [ngClass]="{ 'is-invalid': submitted && f.drivernm.errors }" />
+        <div *ngIf="submitted && f.drivernm.errors" class="invalid-feedback">
+          <div *ngIf="f.drivernm.errors.required">성명을 입력하세요</div>
+        </div>
       </div>
     </div>
 
@@ -45,51 +65,70 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="selectUseType" class="col-form-label">사용형태</label>
-        <select id="selectUseType" class="form-control" formControlName="usetype">
+        <select id="selectUseType" class="form-control" formControlName="usetype"
+          [ngClass]="{ 'is-invalid': submitted && f.usetype.errors }">
           <option [value]="item.code" *ngFor="let item of useTypeList">{{item.name}}</option>
         </select>
+        <div *ngIf="submitted && f.usetype.errors" class="invalid-feedback">
+          <div *ngIf="f.usetype.errors.required">사용형태를 선택하세요</div>
+        </div>
       </div>
       <div class="form-group col-md-6">
         <label for="selectPurpose" class="col-form-label">사용유형</label>
-        <select id="selectPurpose" class="form-control" formControlName="usepurs">
+        <select id="selectPurpose" class="form-control" formControlName="usepurs"
+          [ngClass]="{ 'is-invalid': submitted && f.usepurs.errors }">
           <option [value]="item.code" *ngFor="let item of usePursList">{{item.name}}</option>
         </select>
+        <div *ngIf="submitted && f.usepurs.errors" class="invalid-feedback">
+          <div *ngIf="f.usepurs.errors.required">사용유형을 선택하세요</div>
+        </div>
       </div>
     </div>
 
     <div class="form-group width: 100%">
       <label for="useDetail">사용목적 기입</label>
-      <textarea class="form-control" id="useDetail" rows="3" formControlName="usepursdetail"></textarea>
+      <textarea class="form-control" id="useDetail" rows="3" formControlName="usepursdetail"
+        [ngClass]="{ 'is-invalid': submitted && f.usepursdetail.errors }"></textarea>
+      <div *ngIf="submitted && f.usepursdetail.errors" class="invalid-feedback">
+        <div *ngIf="f.usepursdetail.errors.required">사용목적을 기입하세요</div>
+      </div>
     </div>
 
     <div class="form-row">
       <div class="form-group col-md-3">
         <label for="inputDestination" class="col-form-label">목적지</label>
-        <input id="destination" type="text" class="form-control" placeholder="목적지" formControlName="dest">
+        <input id="destination" type="text" class="form-control" placeholder="목적지" formControlName="dest"
+          [ngClass]="{ 'is-invalid': submitted && f.dest.errors }" />
+        <div *ngIf="submitted && f.dest.errors" class="invalid-feedback">
+          <div *ngIf="f.dest.errors.required">목적지를 기입하세요</div>
+        </div>
       </div>
       <div class="form-group col-md-3">
         <label for="inputStopover" class="col-form-label">경유지</label>
-        <input type="text" class="form-control" placeholder="경유지" formControlName="dropby">
+        <input type="text" class="form-control" placeholder="경유지" formControlName="dropby" />
       </div>
       <div class="form-group col-md-3">
-        <label for="inputKM" class="col-form-label">주행거리</label>
-        <span style="display: flex;"><input type="text" class="form-control" placeholder="주행거리"
-            formControlName="drivedist"><span style="margin-top: 5px;">KM</span></span>
+        <label for="inputKM" class="col-form-label">주행거리 (KM)</label>
+        <input type="text" class="form-control" placeholder="주행거리" formControlName="drivedist"
+          [ngClass]="{ 'is-invalid': submitted && f.drivedist.errors }" />
+        <div *ngIf="submitted && f.drivedist.errors" class="invalid-feedback">
+          <div *ngIf="f.drivedist.errors.required">주행거리를 기입하세요</div>
+        </div>
       </div>
       <div class="form-group col-md-3">
-        <label for="inputRefuel" class="col-form-label">주유내역</label>
-        <span style="display: flex;"><input type="text" class="form-control" placeholder="주유량"
-            formControlName="fueling"><span style="margin-top: 5px;">L</span></span>
+        <label for="inputRefuel" class="col-form-label">주유내역 (리터)</label>
+        <input type="text" class="form-control" placeholder="주유량" formControlName="fueling" />
       </div>
     </div>
-  </div>
 
+    <div class="row justify-content-center" style="margin-top: 20px;">
+      <!-- <button type="submit" class="btn btn-md btn-primary" style="margin: 5px;"
+        [disabled]="!historyInputForm.valid">입력완료</button> -->
+      <button type="submit" class="btn btn-md btn-primary" style="margin: 5px;">입력완료</button>
+      <button (click)="close()" id="closePage" class="btn btn-md btn-primary" type="button"
+        style="margin: 5px;">닫기</button>
+    </div>
 
-  <div class="row justify-content-center" style="margin-top: 20px;">
-    <button (click)="add()" id="addInputData" class="btn btn-md btn-primary" type="submit"
-      style="margin: 5px;">입력완료</button>
-    <button (click)="close()" id="closePage" class="btn btn-md btn-primary" type="submit"
-      style="margin: 5px;">닫기</button>
-  </div>
+  </form>
 
 </div>
