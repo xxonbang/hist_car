@@ -23,7 +23,7 @@ export class HistorySearchComponent implements OnInit {
   historyInputForm: FormGroup;
 
   // 차량조희 input box 내 List 설정용 프로퍼티
-  histCarList: SelectionListModel[];
+  caridList: SelectionListModel[];
 
   // 모든 input box 에 대한 하나의 입력 값들을 받게 될 record 변수를 InputFieldsModel 타입으로 생성
   record = new InputFieldsModel();
@@ -57,7 +57,7 @@ export class HistorySearchComponent implements OnInit {
     this.dataSource.sort = this.sort;
 
     // 페이지 loading 시 차량목록을 drop-box 에 바로 loading 해주기 위하여 ngOnInit에 포함
-    this.getHistCarList();
+    this.getCaridList();
 
     // table 의 paginator 기능을 위한 선언
     this.dataSource.paginator = this.paginator;
@@ -66,7 +66,7 @@ export class HistorySearchComponent implements OnInit {
     this.historyInputForm = new FormGroup({
       datefrom: new FormControl(),
       dateto: new FormControl(),
-      histCar: new FormControl()
+      carid: new FormControl()
     });
 
     // 사용 일자 input box 내 default 로 오늘 날짜를 기입하기 위한 기능
@@ -88,20 +88,20 @@ export class HistorySearchComponent implements OnInit {
   // }
 
   // 차량선택 input box 내 List 조회용, Page 생성 시 차량목록을 서버에 요청 및 응답 받아 화면 drop-box 내에 표시
-  getHistCarList() {
-    this.service.getHistCarSelectionList()
+  getCaridList() {
+    this.service.getCaridSelectionList()
       .subscribe(
-        this.getHistCarListOk(),
-        this.getHistCarListError()
+        this.getCaridListOk(),
+        this.getCaridListError()
       )
   }
 
   // 서버로 부터 받아온 response SelectionListModel 배열에 담아 html 에서 사용할 수 있도록 함.
-  getHistCarListOk() {
-    return (res: SelectionListModel[]) => this.histCarList = res;
+  getCaridListOk() {
+    return (res: SelectionListModel[]) => this.caridList = res;
   }
   // 서버 통신 시, error 처리
-  getHistCarListError() {
+  getCaridListError() {
     return (error) => console.log(error);
   }
 

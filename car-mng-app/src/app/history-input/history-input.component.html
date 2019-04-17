@@ -35,12 +35,12 @@
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="selectCar" class="col-form-label">차량선택</label>
-        <select id="selectCar" class="form-control" formControlName="histCar"
-          [ngClass]="{ 'is-invalid': submitted && f.histCar.errors }">
-          <option [value]="item.code" *ngFor="let item of histCarList">{{item.name}}</option>
+        <select id="selectCar" class="form-control" formControlName="carid"
+          [ngClass]="{ 'is-invalid': submitted && f.carid.errors }">
+          <option [value]="item.code" *ngFor="let item of caridList">{{item.name}}</option>
         </select>
-        <div *ngIf="submitted && f.histCar.errors" class="invalid-feedback">
-          <div *ngIf="f.histCar.errors.required">차량을 선택하세요</div>
+        <div *ngIf="submitted && f.carid.errors" class="invalid-feedback">
+          <div *ngIf="f.carid.errors.required">차량을 선택하세요</div>
         </div>
       </div>
       <div class="form-group col-md-4">

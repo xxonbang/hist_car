@@ -12,6 +12,6 @@ export class InputFieldsModel {
     dest: string;
     dropby: string;
     fueling: number;
-    histCar: string;
+    carid: string;
 
 }

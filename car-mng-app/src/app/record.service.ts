@@ -37,7 +37,7 @@ export class RecordService {
   conditions = new InputFieldsModel();
 
   // eventEmit 형태로 차량조회, 사용목적, 사용형태 List 를 생성
-  histCarList$: EventEmitter<Map<string, string>> = new EventEmitter();
+  caridList$: EventEmitter<Map<string, string>> = new EventEmitter();
   usePursList$: EventEmitter<Map<string, string>> = new EventEmitter();
   useTypeList$: EventEmitter<Map<string, string>> = new EventEmitter();
 
@@ -116,7 +116,7 @@ export class RecordService {
   goBack() { }
 
   // server 로부터 차량목록을 받아 오는 기능 -> input form 에서 select 할 수 있도록 리턴 값 전달
-  getHistCarSelectionList() {
+  getCaridSelectionList() {
     return this.http.get(this.baseUrl + this.carListUrl, { headers: this.getHttpHeaders() });
   }
 
