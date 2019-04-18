@@ -23,7 +23,9 @@
         <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 0px;"
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>시작일</mat-label>
-          <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD" formControlName="datefrom">
+          <!-- <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD" formControlName="datefrom"> -->
+          <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD" [max]="dateto"
+            (ngModelChange)="fromDateChange($event)" formControlName="datefrom">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
@@ -31,7 +33,8 @@
         <mat-form-field class="col-md-6" appearance="outline" style="padding-left: 0px; padding-right: 30px;"
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>종료일</mat-label>
-          <input matInput [matDatepicker]="picker2" placeholder="YYYY-MM-DD" name="dateTo" formControlName="dateto">
+          <input matInput [matDatepicker]="picker2" placeholder="YYYY-MM-DD" name="dateTo" formControlName="dateto"
+            (ngModelChange)="toDateChange($event)" [min]="datefrom">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
@@ -41,7 +44,7 @@
     <div class="form-row">
       <div class="form-group col-md-12">
         <label for="selectCar" class="col-form-label">차량선택</label>
-        <select id="selectCar" class="form-control" formControlName="histCar">
+        <select id="selectCar" class="form-control" formControlName="histCar" (ngModelChange)="histcarChange($event)">
           <option [value]="item.code" *ngFor="let item of histCarList">{{item.name}}</option>
         </select>
       </div>
@@ -92,12 +95,20 @@
 
         <ng-container matColumnDef="usetype">
           <th mat-header-cell *matHeaderCellDef> 사용형태 </th>
-          <td mat-cell *matCellDef="let element"> {{element.usetype}} </td>
+          <td mat-cell *matCellDef="let element">
+            <div class="" *ngFor="let item of useTypeList">
+              <span *ngIf="element.usetype == item.code">{{item.name}}</span>
+            </div>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="usepurs">
           <th mat-header-cell *matHeaderCellDef> 사용유형 </th>
-          <td mat-cell *matCellDef="let element"> {{element.usepurs}} </td>
+          <td mat-cell *matCellDef="let element">
+            <div class="" *ngFor="let item of usePursList">
+              <span *ngIf="element.usepurs == item.code">{{item.name}}</span>
+            </div>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="usepursdetail">
@@ -132,7 +143,11 @@
 
         <ng-container matColumnDef="carid">
           <th mat-header-cell *matHeaderCellDef> 차량 </th>
-          <td mat-cell *matCellDef="let element"> {{element.carid}} </td>
+          <td mat-cell *matCellDef="let element">
+            <div class="" *ngFor="let item of histCarList">
+              <span *ngIf="element.carid == item.code">{{item.name}}</span>
+            </div>
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

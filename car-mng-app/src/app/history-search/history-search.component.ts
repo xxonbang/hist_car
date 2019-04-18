@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import { InputFieldsModel } from '../input-fields-model';
-import { RecordService } from '../record.service'
+import { RecordService } from '../record.service';
 
 import { DatePipe } from '@angular/common';
 
@@ -19,6 +19,7 @@ import { SelectionListModel } from '../selection-list-model';
 
 export class HistorySearchComponent implements OnInit {
 
+  // index: FormGroup;
   // Angular Reactive Form Group 사용을 위한 선언
   historyInputForm: FormGroup;
 
@@ -31,25 +32,32 @@ export class HistorySearchComponent implements OnInit {
   allRecords: InputFieldsModel[];
 
   // table 의 header 부분 컬럼들 셋팅
-  displayedColumns: string[] = ['select', 'seq', 'datefrom', 'dateto', 'driverdept', 'drivernm', 'usetype', 'usepurs', 'usepursdetail', 'drivedist', 'accummileage', 'dest', 'dropby', 'fueling', 'carid'];
+  displayedColumns: string[] = ['select', 'seq', 'datefrom', 'dateto', 'driverdept',
+  'drivernm', 'usetype', 'usepurs', 'usepursdetail', 'drivedist', 'accummileage', 'dest', 'dropby', 'fueling', 'carid'];
   // table 의 data 들에 대한 source
   dataSource = new MatTableDataSource(this.allRecords);
   // 체크박스용
   selection = new SelectionModel<InputFieldsModel>(true, []);
 
+  useTypeList: SelectionListModel[];
+  usePursList: SelectionListModel[];
+
+  // 날짜 제한을 위해 사용
+  datefrom: Date;
+  dateto: Date;
+  requestParam = {datefrom: '', dateto: '', carid: ''};
 
   constructor(
     // 날짜를 yyyy-mm-dd 형태로 구현해 주기 위한 DatePipe 생성
     private datePipe: DatePipe,
     // RecordService 사용을 위한 sevice 생성
-    private service: RecordService,
+    private service: RecordService
   ) { }
 
   // table sort
   @ViewChild(MatSort) sort: MatSort;
   // table pagination
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
 
   ngOnInit() {
 
@@ -70,10 +78,48 @@ export class HistorySearchComponent implements OnInit {
     });
 
     // 사용 일자 input box 내 default 로 오늘 날짜를 기입하기 위한 기능
-    // const today = new Date();
-    // this.historyInputForm.controls['datefrom'].setValue(today);
-    // this.historyInputForm.controls['dateto'].setValue(today);
+    const today = new Date();
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    this.historyInputForm.controls['datefrom'].setValue(oneWeekAgo);
+    this.historyInputForm.controls['dateto'].setValue(today);
+    this.fromDateChange(oneWeekAgo);
+    this.toDateChange(today);
 
+    this.getUseTypeList();
+    this.getUsePursList();
+  }
+
+  getUseTypeList() {
+    this.service.getUseTypeSelectionList()
+      .subscribe(
+        this.getUseTypeListOk(),
+        this.getUseTypeListError()
+      );
+  }
+
+  getUsePursList() {
+    this.service.getUsePursSelectionList()
+      .subscribe(
+        this.getUsePursListOk(),
+        this.getUsePursListError()
+      );
+  }
+
+  getUsePursListError() {
+    return error => console.log(error);
+  }
+
+  getUsePursListOk() {
+    return (res: SelectionListModel[]) => this.usePursList = res;
+  }
+
+  getUseTypeListOk() {
+    return (res: SelectionListModel[]) => this.useTypeList = res;
+  }
+
+  getUseTypeListError() {
+    return error => console.log(error);
   }
 
   // setSubscribe() {
@@ -93,7 +139,7 @@ export class HistorySearchComponent implements OnInit {
       .subscribe(
         this.getHistCarListOk(),
         this.getHistCarListError()
-      )
+      );
   }
 
   // 서버로 부터 받아온 response SelectionListModel 배열에 담아 html 에서 사용할 수 있도록 함.
@@ -158,7 +204,7 @@ export class HistorySearchComponent implements OnInit {
       .subscribe(
         this.searchRecordListOK(),
         this.searchRecordListErr()
-      )
+      );
 
     // this.service.setSearchConditions(this.historyInputForm.value)
     //   .subscribe((res: InputFieldsModel[]) => {
@@ -169,21 +215,17 @@ export class HistorySearchComponent implements OnInit {
   }
 
   getRecordsByConditions() {
-
-    // server 쪽에서 date data 를 받을 때, yyyy-mm-dd 형태로 받게 되어 있으므로, 해당 형태로 날짜를 변환해서 보내기 위함
-    this.historyInputForm.controls['datefrom'].setValue(this.transformDate(this.historyInputForm.controls['datefrom'].value));
-    this.historyInputForm.controls['dateto'].setValue(this.transformDate(this.historyInputForm.controls['dateto'].value));
-
-    this.service.getRecordsByConditions(this.historyInputForm.value)
+    this.service.getRecordsByConditions(this.requestParam)
       .subscribe(
         (res) => {
           if (res.length > 0) {
             this.dataSource.data = res;
           } else {
+            // 검색 조건에 해당하는 값이 없을 수 있음, 메세지 불필요 해 보임
             alert('검색조건을 확인하세요');
           }
         }
-      )
+      );
   }
 
 
@@ -200,6 +242,20 @@ export class HistorySearchComponent implements OnInit {
   // 닫기 기능 호출, localStorage 내 'accessToken' 정보를 제거하고 login Page로 리다이렉션
   close(): void {
     this.service.goToMainPage();
+  }
+
+  fromDateChange(inputDate) {
+    this.datefrom = inputDate;
+    this.requestParam.datefrom = this.transformDate(inputDate);
+  }
+
+  toDateChange(inputDate) {
+    this.dateto = inputDate;
+    this.requestParam.dateto = this.transformDate(inputDate);
+  }
+
+  histcarChange(inputCar) {
+    this.requestParam.carid = inputCar;
   }
 
 }
