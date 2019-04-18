@@ -24,7 +24,7 @@ export class HistoryInputComponent implements OnInit {
   historyInputForm: FormGroup;
 
   // 차량조희 input box 내 List 설정용 프로퍼티
-  histCarList: SelectionListModel[];
+  caridList: SelectionListModel[];
   // 사용형태 input box 내 List 설정용 프로퍼티
   useTypeList: SelectionListModel[];
   // 사용유형 input box 내 List 설정용 프로퍼티
@@ -48,14 +48,14 @@ export class HistoryInputComponent implements OnInit {
   ngOnInit() {
 
     // input-box 들 중 drop-down 용 List 값을 Page loding 시 넣어주기 위함
-    this.getHistCarList();
+    this.getCaridList();
     this.getUseTypeList();
     this.getUsePursList();
 
     this.historyInputForm = this.formBuilder.group({
       datefrom: [this.record.datefrom, [Validators.required]],
       dateto: [this.record.dateto, [Validators.required]],
-      histCar: [this.record.histCar, [Validators.required]],
+      carid: [this.record.carid, [Validators.required]],
       driverdept: [this.record.driverdept, [Validators.required]],
       drivernm: [this.record.drivernm, [Validators.required]],
       usetype: [this.record.usetype, [Validators.required]],
@@ -63,9 +63,9 @@ export class HistoryInputComponent implements OnInit {
       usepursdetail: [this.record.usepursdetail, [Validators.required]],
       dest: [this.record.dest, [Validators.required]],
       dropby: [this.record.dropby],
-      drivedist: [this.record.drivedist, [Validators.required]],
+      drivedist: [this.record.drivedist, [Validators.required, Validators.pattern("[0-9]*")]],
       // accummileage: new FormControl(),
-      fueling: [this.record.fueling],
+      fueling: [this.record.fueling, [Validators.pattern("[0-9]*")]],
     });
 
 
@@ -111,11 +111,11 @@ export class HistoryInputComponent implements OnInit {
   }
 
   // 차량선택 input box 내 List 조회용
-  getHistCarList() {
-    this.service.getHistCarSelectionList()
+  getCaridList() {
+    this.service.getCaridSelectionList()
       .subscribe(
-        this.getHistCarListOk(),
-        this.getHistCarListError()
+        this.getCaridListOk(),
+        this.getCaridListError()
       );
   }
 
@@ -138,8 +138,8 @@ export class HistoryInputComponent implements OnInit {
   }
 
   // 서버로 부터 받아온 response SelectionListModel 배열에 담아 html 에서 사용할 수 있도록 함.
-  getHistCarListOk() {
-    return (res: SelectionListModel[]) => this.histCarList = res;
+  getCaridListOk() {
+    return (res: SelectionListModel[]) => this.caridList = res;
   }
 
   getUsePursListOk() {
@@ -151,7 +151,7 @@ export class HistoryInputComponent implements OnInit {
   }
 
   // 서버 통신 시, error 처리
-  getHistCarListError() {
+  getCaridListError() {
     return error => console.log(error);
   }
 

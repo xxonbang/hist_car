@@ -44,8 +44,8 @@
     <div class="form-row">
       <div class="form-group col-md-12">
         <label for="selectCar" class="col-form-label">차량선택</label>
-        <select id="selectCar" class="form-control" formControlName="histCar" (ngModelChange)="histcarChange($event)">
-          <option [value]="item.code" *ngFor="let item of histCarList">{{item.name}}</option>
+        <select id="selectCar" class="form-control" formControlName="carid" (ngModelChange)="histcarChange($event)">
+          <option [value]="item.code" *ngFor="let item of caridList">{{item.name}}</option>
         </select>
       </div>
     </div>
