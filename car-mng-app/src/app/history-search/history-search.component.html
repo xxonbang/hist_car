@@ -144,7 +144,7 @@
         <ng-container matColumnDef="carid">
           <th mat-header-cell *matHeaderCellDef> 차량 </th>
           <td mat-cell *matCellDef="let element">
-            <div class="" *ngFor="let item of histCarList">
+            <div class="" *ngFor="let item of caridList">
               <span *ngIf="element.carid == item.code">{{item.name}}</span>
             </div>
           </td>
