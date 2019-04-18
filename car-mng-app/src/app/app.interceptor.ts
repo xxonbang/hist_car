@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable()
-export class customHttpInterceptor implements HttpInterceptor {
+export class CustomHttpInterceptor implements HttpInterceptor {
 
     headerInfo: HttpHeaders;
 
@@ -21,11 +21,11 @@ export class customHttpInterceptor implements HttpInterceptor {
     tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
     constructor(
-        private _http: HttpClient,
+        private http: HttpClient,
         public router: Router
     ) { }
 
-    addToken(req: HttpRequest<any>, authToken: String): HttpRequest<any> {
+    addToken(req: HttpRequest<any>, authToken: string): HttpRequest<any> {
         return req.clone({
             headers: req.headers
                 .append('x-access-token', authToken + ''),
@@ -33,7 +33,7 @@ export class customHttpInterceptor implements HttpInterceptor {
         });
     }
 
-    getAccessToken(): String {
+    getAccessToken(): string {
         return localStorage.getItem('accessToken') === null ? '' : localStorage.getItem('accessToken');
     }
 

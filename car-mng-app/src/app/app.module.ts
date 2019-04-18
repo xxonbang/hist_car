@@ -14,7 +14,7 @@ import { LoginComponent } from './login/login.component';
 // import { MatPaginatorModule, MatCheckboxModule } from '@angular/material';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { customHttpInterceptor } from './app.interceptor';
+import { CustomHttpInterceptor } from './app.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,11 +37,12 @@ import { customHttpInterceptor } from './app.interceptor';
   ],
 
   exports: [
-
+  ],
+  schemas: [
   ],
 
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: customHttpInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
