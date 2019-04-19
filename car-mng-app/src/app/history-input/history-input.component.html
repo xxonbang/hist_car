@@ -10,7 +10,8 @@
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>시작일</mat-label>
           <input matInput [matDatepicker]="picker1" placeholder="YYYY-MM-DD" formControlName="datefrom"
-            [ngClass]="{ 'is-invalid': submitted && f.datefrom.errors }" />
+            [ngClass]="{ 'is-invalid': submitted && f.datefrom.errors }" [max]="dateto"
+            (ngModelChange)="fromDateChange($event)" />
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
@@ -22,7 +23,8 @@
           [ngStyle]="{'font-size.px': 15}">
           <mat-label>종료일</mat-label>
           <input matInput [matDatepicker]="picker2" placeholder="YYYY-MM-DD" formControlName="dateto"
-            [ngClass]="{ 'is-invalid': submitted && f.dateto.errors }" />
+            [ngClass]="{ 'is-invalid': submitted && f.dateto.errors }" [min]="datefrom"
+            (ngModelChange)="toDateChange($event)" />
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
@@ -37,6 +39,7 @@
         <label for="selectCar" class="col-form-label">차량선택</label>
         <select id="selectCar" class="form-control" formControlName="carid"
           [ngClass]="{ 'is-invalid': submitted && f.carid.errors }">
+          <option [value]="-1">- 선택 -</option>
           <option [value]="item.code" *ngFor="let item of caridList">{{item.name}}</option>
         </select>
         <div *ngIf="submitted && f.carid.errors" class="invalid-feedback">
@@ -67,6 +70,7 @@
         <label for="selectUseType" class="col-form-label">사용형태</label>
         <select id="selectUseType" class="form-control" formControlName="usetype"
           [ngClass]="{ 'is-invalid': submitted && f.usetype.errors }">
+          <option [value]="-1">- 선택 -</option>
           <option [value]="item.code" *ngFor="let item of useTypeList">{{item.name}}</option>
         </select>
         <div *ngIf="submitted && f.usetype.errors" class="invalid-feedback">
@@ -77,6 +81,7 @@
         <label for="selectPurpose" class="col-form-label">사용유형</label>
         <select id="selectPurpose" class="form-control" formControlName="usepurs"
           [ngClass]="{ 'is-invalid': submitted && f.usepurs.errors }">
+          <option [value]="-1">- 선택 -</option>
           <option [value]="item.code" *ngFor="let item of usePursList">{{item.name}}</option>
         </select>
         <div *ngIf="submitted && f.usepurs.errors" class="invalid-feedback">
@@ -114,10 +119,12 @@
         <div *ngIf="submitted && f.drivedist.errors" class="invalid-feedback">
           <div *ngIf="f.drivedist.errors.required">주행거리를 기입하세요</div>
         </div>
+        <div style="color: red" *ngIf="historyInputForm.controls['drivedist'].errors?.pattern">숫자만 기입하세요</div>
       </div>
       <div class="form-group col-md-3">
         <label for="inputRefuel" class="col-form-label">주유내역 (리터)</label>
         <input type="text" class="form-control" placeholder="주유량" formControlName="fueling" />
+        <div style="color: red" *ngIf="historyInputForm.controls['fueling'].errors?.pattern">숫자만 기입하세요</div>
       </div>
     </div>
 

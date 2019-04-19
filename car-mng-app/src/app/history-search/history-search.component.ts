@@ -33,7 +33,7 @@ export class HistorySearchComponent implements OnInit {
 
   // table 의 header 부분 컬럼들 셋팅
   displayedColumns: string[] = ['select', 'seq', 'datefrom', 'dateto', 'driverdept',
-  'drivernm', 'usetype', 'usepurs', 'usepursdetail', 'drivedist', 'accummileage', 'dest', 'dropby', 'fueling', 'carid'];
+    'drivernm', 'usetype', 'usepurs', 'usepursdetail', 'drivedist', 'accummileage', 'dest', 'dropby', 'fueling', 'carid'];
   // table 의 data 들에 대한 source
   dataSource = new MatTableDataSource(this.allRecords);
   // 체크박스용
@@ -45,7 +45,7 @@ export class HistorySearchComponent implements OnInit {
   // 날짜 제한을 위해 사용
   datefrom: Date;
   dateto: Date;
-  requestParam = {datefrom: '', dateto: '', carid: ''};
+  requestParam = { datefrom: '', dateto: '', carid: '' };
 
   constructor(
     // 날짜를 yyyy-mm-dd 형태로 구현해 주기 위한 DatePipe 생성
@@ -63,9 +63,6 @@ export class HistorySearchComponent implements OnInit {
 
     // table 내 sort 기능을 위한 선언
     this.dataSource.sort = this.sort;
-
-    // 페이지 loading 시 차량목록을 drop-box 에 바로 loading 해주기 위하여 ngOnInit에 포함
-    this.getCaridList();
 
     // table 의 paginator 기능을 위한 선언
     this.dataSource.paginator = this.paginator;
@@ -86,8 +83,21 @@ export class HistorySearchComponent implements OnInit {
     this.fromDateChange(oneWeekAgo);
     this.toDateChange(today);
 
+    // 페이지 loading 시 차량목록을 drop-box 에 바로 loading 해주기 위하여 ngOnInit에 포함
+    this.getCaridList();
+
+    // List 출력 시, usetype 과 usepurs 를 화면에 code 말고 name 값으로 출력해주기 위하여 List들을 불러옴 -> html 에서 비교 연산을 통해 변경된 값 출력
     this.getUseTypeList();
     this.getUsePursList();
+  }
+
+  // 차량선택 input box 내 List 조회용, Page 생성 시 차량목록을 서버에 요청 및 응답 받아 화면 drop-box 내에 표시
+  getCaridList() {
+    this.service.getCaridSelectionList()
+      .subscribe(
+        this.getCaridListOk(),
+        this.getCaridListError()
+      );
   }
 
   getUseTypeList() {
@@ -106,56 +116,40 @@ export class HistorySearchComponent implements OnInit {
       );
   }
 
-  getUsePursListError() {
-    return error => console.log(error);
+  // server 와의 통신을 위해 date format 변경
+  transformDate(date) {
+    return this.datePipe.transform(date, 'yyyyMMdd');
+  }
+
+  // 서버로 부터 받아온 response SelectionListModel 배열에 담아 html 에서 사용할 수 있도록 함.
+  // 또한, drop-box 형태의 input-box 들에 default 값으로 "-선택-" 을 넣어주기 위하여 임의의 값(-1)을 지정하여 초기화 해주게 됨
+  getCaridListOk() {
+    return (res => {
+      this.historyInputForm.controls['carid'].setValue("-1");
+      this.caridList = res;
+    });
   }
 
   getUsePursListOk() {
     return (res: SelectionListModel[]) => this.usePursList = res;
   }
 
+  // drop-box 형태의 input-box 들에 default 값으로 "-선택-" 을 넣어주기 위하여 임의의 값(-1)을 지정하여 초기화 해주게 됨
   getUseTypeListOk() {
     return (res: SelectionListModel[]) => this.useTypeList = res;
   }
 
-  getUseTypeListError() {
-    return error => console.log(error);
-  }
-
-  // setSubscribe() {
-
-  //   this.service.carUseHist$.pipe().subscribe(res => {
-  //     console.dir('### setSubscribe is working!!');
-  //     // res
-  //     this.dataSource.data = res;
-
-  //     // this.TABLE_DATA = res;
-  //   });
-  // }
-
-  // 차량선택 input box 내 List 조회용, Page 생성 시 차량목록을 서버에 요청 및 응답 받아 화면 drop-box 내에 표시
-  getCaridList() {
-    this.service.getCaridSelectionList()
-      .subscribe(
-        this.getHistCarListOk(),
-        this.getHistCarListError()
-      );
-  }
-
-  // 서버로 부터 받아온 response SelectionListModel 배열에 담아 html 에서 사용할 수 있도록 함.
-  getHistCarListOk() {
-    return (res => {
-      this.caridList = res;
-    });
-  }
   // 서버 통신 시, error 처리
-  getHistCarListError() {
+  getCaridListError() {
     return (error) => console.log(error);
   }
 
-  // server 와의 통신을 위해 date format 변경
-  transformDate(date) {
-    return this.datePipe.transform(date, 'yyyyMMdd');
+  getUsePursListError() {
+    return error => console.log(error);
+  }
+
+  getUseTypeListError() {
+    return error => console.log(error);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -180,42 +174,16 @@ export class HistorySearchComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.drivernm + 1}`;
   }
 
-  // search 버튼 클릭 시, service의 getRecord()를 호출 -> res 값을 받아와 OK 와 Err 로 전달
-  // search() {
-  //   this.service.getRecord()
-  //     .subscribe(
-  //       this.searchRecordListOK(),
-  //       this.searchRecordListErr()
-  //     )
-  // }
-
+  // 전체 검색 기능
   search() {
-
-    //   const ok = (res => {
-    //     this.searchRecordListOK();
-    //   });
-    //   const err =(res => {
-    //     this.searchRecordListErr();
-    //   });
-
-    //   this.service.setSearchConditions(this.historyInputForm.value)
-    //     .subscribe(ok, err)
-    // }
-
     this.service.getRecord()
       .subscribe(
         this.searchRecordListOK(),
         this.searchRecordListErr()
       );
-
-    // this.service.setSearchConditions(this.historyInputForm.value)
-    //   .subscribe((res: InputFieldsModel[]) => {
-    //     let res = res;
-    //     this.searchRecordListOK(res),
-    //       this.searchRecordListErr(res)
-    //   });
   }
 
+  // 조건 검색 기능
   getRecordsByConditions() {
     this.service.getRecordsByConditions(this.requestParam)
       .subscribe(
@@ -230,7 +198,6 @@ export class HistorySearchComponent implements OnInit {
       );
   }
 
-
   // search 기능 OK 시 res 값을 dataSource 에 넣어줌
   searchRecordListOK() {
     return (res) => this.dataSource.data = res;
@@ -241,11 +208,15 @@ export class HistorySearchComponent implements OnInit {
     return (error) => console.log(error);
   }
 
-  // 닫기 기능 호출, localStorage 내 'accessToken' 정보를 제거하고 login Page로 리다이렉션
+  // 닫기 기능, main page로 리다이렉션
   close(): void {
     this.service.goToMainPage();
   }
 
+  // 1. html 내에서 시작일과 종료일 사이 유효성 검사를 위하여 화면의 datepicker에 설정된 날짜 값을 받아오고, 그 값을 date 타입의 datefrom 변수에 넣음
+  // (ngModelChange)를 통해 화면의 datepicker 의 날짜가 변경 될 때에 $event 값을 fromDateChange() 에 실시간으로 method invoke 실행
+  // 2. server 와의 통신 시 yyyy-mm-dd 형태로 통신해야 하므로 서버로 보내는 date 형태를 transformDate 하여 통신에 사용할 requestParam.datefrom 변수에 넣는다.
+  // 즉, datefrom 변수는 화면의 유효성 검사에 활용하기 위하여 선언 되는 date 값, requestParam.datefrom 은 server 와의 통신을 위하여 타입이 변경되어 선언되는 date 값.
   fromDateChange(inputDate) {
     this.datefrom = inputDate;
     this.requestParam.datefrom = this.transformDate(inputDate);
