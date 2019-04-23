@@ -61,6 +61,7 @@
         <div *ngIf="submitted && f.drivernm.errors" class="invalid-feedback">
           <div *ngIf="f.drivernm.errors.required">성명을 입력하세요</div>
         </div>
+        <div style="color: red" *ngIf="historyInputForm.controls['drivernm'].errors?.pattern">문자만 기입하세요</div>
       </div>
     </div>
 

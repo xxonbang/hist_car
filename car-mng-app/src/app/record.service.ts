@@ -85,11 +85,18 @@ export class RecordService {
       .subscribe((ok => {
         // this.goToMainPage();
         alert('입력완료');
+        this.refresh();
       }), (err => {
-        console.dir(err);
+        alert('server 통신 오류');
       }));
   }
 
+  // 화면 refresh 기능
+  refresh(): void {
+    window.location.reload();
+  }
+
+  // main page 로 리다이렉션
   goToMainPage() {
     this.router.navigate(['/main']);
   }

@@ -16,6 +16,7 @@ import { InputFieldsModel } from '../input-fields-model';
 })
 export class LoginService {
 
+  // 기본 url 주소 설정
   private baseUrl = '/rest';
 
   constructor(
@@ -39,13 +40,10 @@ export class LoginService {
 
 
 
-  ////////////////////////////////////
+  // 로그인 기능
   login(userId: string, userPassword: string) {
-    // const body = {
-    //   username: 'admin',
-    //   password: 'admin1234'
-    // };
 
+    // 로그인 성공 시, response 값의 accessToken 값을 웹 브라우저의 localStorage 내 accessToken 값으로 설정, main page로 리다이렉션
     const ok = (res => {
       console.dir('success');
       localStorage.setItem('accessToken', res.accessToken)
@@ -60,6 +58,7 @@ export class LoginService {
       .subscribe(ok, err);
   }
 
+  // 로그아웃 기능, 수행 시 웹브라우저 내의 accessToken 값을 삭제하고 login page로 리다이렉션
   logout() {
     localStorage.removeItem('accessToken');
     this.router.navigate(['/login']);

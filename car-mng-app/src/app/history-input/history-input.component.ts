@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 
 export class HistoryInputComponent implements OnInit {
 
+  // html 의 input-box 들 유효성 검사를 위한 변수 선언, 등록 버튼 click 시 값을 true 로 설정하며 submit 된 상태에서 유효성이 안맞는 input-box들 check
   submitted = false;
 
   // 모든 input box 에 대한 입력 값들을 받게 될 record 변수를 CommonModel 타입으로 생성
@@ -50,12 +51,13 @@ export class HistoryInputComponent implements OnInit {
     this.getUseTypeList();
     this.getUsePursList();
 
+    // reactive form 사용을 위한 form 셋팅 및 validation option 들 설정
     this.historyInputForm = this.formBuilder.group({
       datefrom: [this.record.datefrom, [Validators.required]],
       dateto: [this.record.dateto, [Validators.required]],
       carid: [this.record.carid, [Validators.required]],
       driverdept: [this.record.driverdept, [Validators.required]],
-      drivernm: [this.record.drivernm, [Validators.required]],
+      drivernm: [this.record.drivernm, [Validators.required, Validators.pattern("[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|a-z|A-Z]*")]],
       usetype: [this.record.usetype, [Validators.required]],
       usepurs: [this.record.usepurs, [Validators.required]],
       usepursdetail: [this.record.usepursdetail, [Validators.required]],
@@ -70,6 +72,7 @@ export class HistoryInputComponent implements OnInit {
     // 사용 일자 input box 내 default 로 오늘 날짜를 기입하기 위한 기능
     const today = new Date();
     const oneWeekAgo = new Date();
+    // 시작일 input-box 내 값을 일주일 전으로 셋팅
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
     this.historyInputForm.controls['datefrom'].setValue(oneWeekAgo);
     this.historyInputForm.controls['dateto'].setValue(today);
@@ -86,20 +89,17 @@ export class HistoryInputComponent implements OnInit {
     return this.datePipe.transform(date, 'yyyyMMdd');
   }
 
+  // datepicker 유효성 검사를 위하여 input-box 에 들어온 날짜를 위에 선언 된 datefrom 변수에 담아서 html 에서 활용할 수 있도록 함
   fromDateChange(inputDate) {
     this.datefrom = inputDate;
   }
 
+  // datepicker 유효성 검사를 위하여 input-box 에 들어온 날짜를 위에 선언 된 datefrom 변수에 담아서 html 에서 활용할 수 있도록 함
   toDateChange(inputDate) {
     this.dateto = inputDate;
   }
 
-  // 
-  histcarChange(inputCar) {
-    this.requestParam.carid = inputCar;
-  }
-
-  // 차량선택 input box 내 List 조회용
+  // 차량선택 drop-box 내 List 설정
   getCaridList() {
     this.service.getCaridSelectionList()
       .subscribe(
@@ -108,7 +108,7 @@ export class HistoryInputComponent implements OnInit {
       );
   }
 
-  // 사용유형 input box 내 List 조회용
+  // 사용유형 drop-box 내 List 설정
   getUsePursList() {
     this.service.getUsePursSelectionList()
       .subscribe(
@@ -117,7 +117,7 @@ export class HistoryInputComponent implements OnInit {
       );
   }
 
-  // 사용형태 input box 내 List 조회용
+  // 사용형태 drop-box 내 List 설정
   getUseTypeList() {
     this.service.getUseTypeSelectionList()
       .subscribe(
@@ -143,7 +143,6 @@ export class HistoryInputComponent implements OnInit {
     });
   }
 
-  // 
   getUseTypeListOk() {
     return (res => {
       this.historyInputForm.controls['usetype'].setValue("-1");
@@ -191,13 +190,7 @@ export class HistoryInputComponent implements OnInit {
       this.service.addInputData(this.historyInputForm.value);
     }
 
-    this.refresh();
     // this.historyInputForm.reset();
-  }
-
-  // 화면 refresh 기능
-  refresh(): void {
-    window.location.reload();
   }
 
   // 닫기 기능, main page 로 리다이렉션

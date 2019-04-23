@@ -12,7 +12,6 @@ import { LoginService } from './login.service'
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  isValidFormSubmitted = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,6 +49,7 @@ export class LoginComponent implements OnInit {
   //   this.authService.login(this.user, ok, err);
   // }
 
+  // 로그인 input-box 들에 대한 form 및 유효성(최소, 최대 글자수) 설정
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       userId: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
@@ -57,15 +57,22 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  // html 에서 form control 을 편하게 하기 위하여 f() 펑션 생성
   get f() { return this.loginForm.controls; }
 
+  // 로그인 버튼 click 시 login service로 id 와 password 값을 전달
   login() {
     this.loginService.login(this.f.userId.value, this.f.userPassword.value);
   }
 
+  // Enter 입력 시 login service로 id 와 password 값을 전달
   onEnter() {
     this.loginService.login(this.f.userId.value, this.f.userPassword.value);
   }
+
+
+
+  
   //   onSubmit() {
   //     this.submitted = true;
 

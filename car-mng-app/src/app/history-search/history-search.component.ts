@@ -198,12 +198,12 @@ export class HistorySearchComponent implements OnInit {
       );
   }
 
-  // search 기능 OK 시 res 값을 dataSource 에 넣어줌
+  // 전체검색 기능 OK 시 res 값을 dataSource 에 넣어줌
   searchRecordListOK() {
     return (res) => this.dataSource.data = res;
   }
 
-  // search 기능 err 수행
+  // 전체검색 기능 err 수행
   searchRecordListErr() {
     return (error) => console.log(error);
   }
@@ -227,6 +227,8 @@ export class HistorySearchComponent implements OnInit {
     this.requestParam.dateto = this.transformDate(inputDate);
   }
 
+  // 서버에 검색 조건 넣어서 통신 시, async 방식에서 carid parameter 가 빠진채로 통신할 것을 대비하기 위하여 input-box 에 값 입력 시,
+  // 바로 requestPara.carid 변수에 담아 통신 시 parameter 누락이 없도록 함
   histcarChange(inputCar) {
     this.requestParam.carid = inputCar;
   }
